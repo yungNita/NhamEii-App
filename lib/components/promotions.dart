@@ -6,11 +6,11 @@ class Promotions extends StatelessWidget {
   final VoidCallback? onTap;
 
   const Promotions({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.label,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

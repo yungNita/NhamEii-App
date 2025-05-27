@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class GradientButton extends StatelessWidget {
-  final String text;
+  final String? text; // Now optional
   final VoidCallback onPressed;
   final double borderRadius;
   final TextStyle? textStyle;
   final EdgeInsetsGeometry padding;
   final double? width;
   final double? height;
-  final String? svgAsset; // Optional SVG asset path
-  final double svgSize; // Size of the SVG icon
+  final String? imageAsset; // Changed from svgAsset to imageAsset
+  final double iconSize;
+  final bool iconOnRight;
+  final double iconSpacing;
 
   const GradientButton({
-    Key? key,
-    required this.text,
+    super.key,
+    this.text, // optional now
     required this.onPressed,
     this.padding = const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
     this.borderRadius = 15.0,
     this.textStyle,
     this.width,
-    this.height = 50,
-    this.svgAsset,
-    this.svgSize = 20,
-  }) : super(key: key);
+    this.height = 35,
+    this.imageAsset,
+    this.iconSize = 20,
+    this.iconOnRight = false,
+    this.iconSpacing = 8,
+  });
 
   final Gradient _gradient = const LinearGradient(
     colors: [Color(0xFFFF69BE), Color(0xFFD8007A)],
@@ -33,6 +36,38 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = textStyle ??
+        const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        );
+
+    Widget? icon = imageAsset != null
+        ? Image.asset(
+            imageAsset!,
+            width: iconSize,
+            height: iconSize,
+            color: style.color, // Apply color tint if needed
+          )
+        : null;
+
+    Widget? label = text != null
+        ? Text(text!, style: style, textAlign: TextAlign.center)
+        : null;
+
+    List<Widget> content = [];
+
+    if (icon != null && label != null) {
+      content = iconOnRight
+          ? [label, SizedBox(width: iconSpacing), icon]
+          : [icon, SizedBox(width: iconSpacing), label];
+    } else if (icon != null) {
+      content = [icon];
+    } else if (label != null) {
+      content = [label];
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -44,43 +79,11 @@ class GradientButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         alignment: Alignment.center,
-        child:
-            svgAsset == null
-                ? Text(
-                  text,
-                  style:
-                      textStyle ??
-                      const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                  textAlign: TextAlign.center,
-                )
-                : Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      svgAsset!,
-                      width: svgSize,
-                      height: svgSize,
-                      color: textStyle?.color ?? Colors.white,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      text,
-                      style:
-                          textStyle ??
-                          const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: content,
+        ),
       ),
     );
   }

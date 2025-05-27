@@ -2,37 +2,103 @@ import 'package:flutter/material.dart';
 
 import 'components/background.dart';
 import 'components/button.dart';
+import 'components/header.dart';
+import 'components/options.dart';
 import 'components/promotions.dart';
-import 'components/text.dart';
+import 'components/searchbar.dart';
 
 class TestComponent extends StatelessWidget {
+  const TestComponent({super.key});
+
   @override
   Widget build(BuildContext context) {
+    // List of promotions for easier management and spacing
+    const promotions = [
+      {'image': 'assets/images/image1.png', 'label': 'Offers'},
+      {'image': 'assets/images/image2.png', 'label': 'Restaurant'},
+      {'image': 'assets/images/image3.png', 'label': 'Buffet'},
+      {'image': 'assets/images/image4.png', 'label': 'Dessert'},
+      {'image': 'assets/images/image5.png', 'label': 'Beverages'},
+    ];
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Background(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0), // Optional: Add padding
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Align items to the left (optional)
-                mainAxisSize: MainAxisSize.max, // Take full height
-                children: [
-                  CustomText(text: 'Hello, there'),
-                  SizedBox(height: 20),
-                  GradientButton(
-                    text: 'Press Me',
-                    onPressed: () {},
-                    width: 100,
-                  ),
-                  SizedBox(height: 20),
-                  Promotions(
-                    imagePath: 'images/download.jpg',
-                    label: 'Promotions',
-                    onTap: () {},
-                  ),
-                ],
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Color(0xFF3E0061)),
+        ),
+      ),
+      home: Background(
+        child: SafeArea(
+          child: Scaffold(
+            appBar: Header(),
+            backgroundColor: Colors.transparent,
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'អត់ដឹងញុាំអីែមន',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Kh BL LazySmooth',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(child: Searchbar(onChanged: (query) {})),
+                        const SizedBox(width: 8),
+                        GradientButton(
+                          imageAsset: 'assets/images/settings.png',
+                          onPressed: () {
+                            debugPrint('Filter button pressed');
+                          },
+                          width: 55,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children:
+                            promotions.map((promo) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 20.0),
+                                child: Promotions(
+                                  imagePath: promo['image']!,
+                                  label: promo['label']!,
+                                  onTap: null,
+                                ),
+                              );
+                            }).toList(),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Options(
+                      title: 'Spin the wheel to get a suggestion!',
+                      buttonText: 'Spin!!',
+                      imageAsset: 'assets/images/wheel.png',
+                      onPressed: () {
+                        print('Option 1 clicked');
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    Options(
+                      title: 'Answer questions for a recommendation!',
+                      buttonText: 'Start!!',
+                      imageAsset: 'assets/images/qna.png',
+                      onPressed: () {
+                        print('Option 1 clicked');
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
