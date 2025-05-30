@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'food_card.dart';
-import '../gradient_background.dart'; 
+import '../Widget/food_card.dart';
+import '../Widget/gradient_background.dart'; 
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
