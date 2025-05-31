@@ -21,7 +21,7 @@ class GradientButton extends StatelessWidget {
     this.borderRadius = 15.0,
     this.textStyle,
     this.width,
-    this.height = 35,
+    this.height = 40,
     this.imageAsset,
     this.iconSize = 20,
     this.iconOnRight = false,
@@ -36,32 +36,36 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = textStyle ??
+    final style =
+        textStyle ??
         const TextStyle(
           color: Colors.white,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
           fontSize: 16,
         );
 
-    Widget? icon = imageAsset != null
-        ? Image.asset(
-            imageAsset!,
-            width: iconSize,
-            height: iconSize,
-            color: style.color, // Apply color tint if needed
-          )
-        : null;
+    Widget? icon =
+        imageAsset != null
+            ? Image.asset(
+              imageAsset!,
+              width: iconSize,
+              height: iconSize,
+              color: style.color, // Apply color tint if needed
+            )
+            : null;
 
-    Widget? label = text != null
-        ? Text(text!, style: style, textAlign: TextAlign.center)
-        : null;
+    Widget? label =
+        text != null
+            ? Text(text!, style: style, textAlign: TextAlign.center)
+            : null;
 
     List<Widget> content = [];
 
     if (icon != null && label != null) {
-      content = iconOnRight
-          ? [label, SizedBox(width: iconSpacing), icon]
-          : [icon, SizedBox(width: iconSpacing), label];
+      content =
+          iconOnRight
+              ? [label, SizedBox(width: iconSpacing), icon]
+              : [icon, SizedBox(width: iconSpacing), label];
     } else if (icon != null) {
       content = [icon];
     } else if (label != null) {
