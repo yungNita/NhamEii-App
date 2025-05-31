@@ -16,7 +16,7 @@ class FoodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 122,
-      height: 157,
+      height: 160,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -45,7 +45,7 @@ class FoodCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            top: -95,
+            top: -90,
             left: -29.5,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
@@ -53,25 +53,17 @@ class FoodCard extends StatelessWidget {
                 width: 180,
                 height: 180,
                 decoration: BoxDecoration(
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     // ignore: deprecated_member_use
-                  //     color: Colors.black.withOpacity(0.2),
-                  //     offset: const Offset(0,8),
-                  //     blurRadius: 24,
-                  //     spreadRadius: 0,
-                  //   )
-                  // ]
                 ),
                 child: Image.asset(
                   imageUrl,
-                  width: 180,
-                  height: 180,
-                  // fit: BoxFit.cover,
+                  width: 245,
+                  height: 245,
                 ),
               ),
             ),
           ),
+
+         
           Positioned.fill(
             top: 47,
             child: Column(
@@ -87,7 +79,7 @@ class FoodCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF44005E),
-                        height: 1.5, // line height
+                        height: 1.5, 
                       ),
                     ),
                     textAlign: TextAlign.center,
