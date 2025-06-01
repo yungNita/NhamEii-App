@@ -4,6 +4,7 @@ import 'package:nhameii/Components/promo_card.dart';
 import '../Components/food_card.dart';
 import '../Components/gradient_background.dart';
 import '../Components/nav_bar.dart'; 
+import '../Components/header_home_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -80,7 +81,9 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 100),
+                const HeaderHomePage(),
+                
+                const SizedBox(height: 40),
                 const Text(
                   'Popular Card',
                   style: TextStyle(

@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+
 import 'Page/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NhamEii',
-      home: const HomePage(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 18),
+          headlineSmall: TextStyle(color: Color(0xFF3E0061), fontSize: 24),
+          bodyMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 14),
+        ),
+      ),
+
+      home: const HomePage(), 
     );
   }
 }
