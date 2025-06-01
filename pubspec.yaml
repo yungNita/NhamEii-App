@@ -80,8 +80,9 @@ flutter:
     - family: Kh BL LazySmooth
       fonts:
         - asset: assets/fonts/Kh BL LazySmooth/Kh BL LazySmooth Regular.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+    - family: Shooting Star
+      fonts:
+        - asset: assets/fonts/Shooting Star/Shooting Star.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

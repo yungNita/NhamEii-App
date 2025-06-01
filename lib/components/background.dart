@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
+
   const Background({super.key, required this.child});
 
   @override
@@ -14,7 +15,12 @@ class Background extends StatelessWidget {
           colors: [Color(0xFFCED0FD), Color(0xFFEADCF4), Color(0xFFF9DEEA)],
         ),
       ),
-      child: child,
+      child: SafeArea(
+        child: Material(
+          color: Colors.transparent, 
+          child: child,
+        ),
+      ),
     );
   }
 }

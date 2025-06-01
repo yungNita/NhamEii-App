@@ -20,7 +20,7 @@ class Options extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 358,
-      height: 81,
+      height: 88,
       decoration: BoxDecoration(
         color: const Color(0xFFE9E9FF),
         borderRadius: BorderRadius.circular(15),
