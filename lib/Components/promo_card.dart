@@ -4,9 +4,9 @@ class PromoCard extends StatelessWidget {
   final String imagePath;
 
   const PromoCard({
-    Key? key,
+    super.key,
     required this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +33,12 @@ class PromoCard extends StatelessWidget {
 
 class PromotionSection extends StatelessWidget {
   final List<String> imagePaths;
-  const PromotionSection({Key? key, required this.imagePaths}) : super(key: key);
+  const PromotionSection({super.key, required this.imagePaths});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200, // Adjust height as needed
+      height: 200, 
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: imagePaths.length,
