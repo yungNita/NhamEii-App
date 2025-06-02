@@ -1,3 +1,8 @@
 {
+<<<<<<< HEAD
     "java.configuration.updateBuildConfiguration": "interactive"
+=======
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cmake.sourceDirectory": "D:/YEAR4-semester2/Mobile-nhameii-project/NhamEii-App/linux"
+>>>>>>> Neth
 }
