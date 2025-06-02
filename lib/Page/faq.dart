@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'components/backbutton.dart';
-import 'components/background.dart';
-import 'components/button.dart';
-import 'components/faqquestion.dart';
+import '../components/backbutton.dart';
+import '../components/background.dart';
+import '../components/button.dart';
+import '../components/faqquestion.dart';
 import 'contactus.dart';
 
 class Faqs extends StatelessWidget {

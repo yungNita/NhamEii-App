@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'components/backbutton.dart';
-import 'components/background.dart';
+import '../components/backbutton.dart';
+import '../components/background.dart';
 
 class Termsnpolicies extends StatelessWidget {
   const Termsnpolicies({super.key});
