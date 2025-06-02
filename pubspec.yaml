@@ -11,7 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  font_awesome_flutter: ^10.7.0  # ✅ Added properly here
+  font_awesome_flutter: ^10.7.0
+  image_picker: ^1.0.7
+  shared_preferences: ^2.2.2   # ✅ Added for storing profile image path
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +22,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/fonts/
+
+  fonts:
+    - family: Sans
+      fonts:
+        - asset: assets/fonts/Sans-Regular.ttf  # ✅ Fixed: Removed the trailing dot
