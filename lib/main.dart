@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/router/app_router.dart';
 
 import 'Page/home_page.dart';
 import 'Page/splashscreen.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 14),
         ),
       ),
-
+      initialRoute: '/',
+      onGenerateRoute: AppRouter.generateRoute,
       home: const SplashScreen(), // Start with splash screen
     );
   }

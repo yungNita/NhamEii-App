@@ -22,17 +22,13 @@ class FoodCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           stops: [0.0, 0.55, 1.0],
-          colors: [
-            Color(0xFFFFFFFF),
-            Color(0xFFEDEDF9),
-            Color(0xFFF4E3F2),
-          ],
+          colors: [Color(0xFFFFFFFF), Color(0xFFEDEDF9), Color(0xFFF4E3F2)],
         ),
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(35),
           bottom: Radius.circular(25),
         ),
-         boxShadow: [
+        boxShadow: [
           BoxShadow(
             color: Color(0xFFEAD3EA),
             offset: Offset(0, 1),
@@ -52,18 +48,12 @@ class FoodCard extends StatelessWidget {
               child: Container(
                 width: 180,
                 height: 180,
-                decoration: BoxDecoration(
-                ),
-                child: Image.asset(
-                  imageUrl,
-                  width: 245,
-                  height: 245,
-                ),
+                decoration: BoxDecoration(),
+                child: Image.asset(imageUrl, width: 245, height: 245),
               ),
             ),
           ),
 
-         
           Positioned.fill(
             top: 47,
             child: Column(
@@ -79,7 +69,7 @@ class FoodCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF44005E),
-                        height: 1.5, 
+                        height: 1.5,
                       ),
                     ),
                     textAlign: TextAlign.center,
