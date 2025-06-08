@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/components/nav_bar.dart';
 
-import 'components/backbutton.dart';
-import 'components/background.dart';
+import '../components/backbutton.dart';
+import '../components/background.dart';
 
 class Termsnpolicies extends StatelessWidget {
   const Termsnpolicies({super.key});
@@ -10,7 +11,7 @@ class Termsnpolicies extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Background(
+    return Scaffold(body:  Background(
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -119,6 +120,12 @@ If you have any questions about these Terms and Conditions, You can contact us:
             ),
           ],
         ),
+      ),
+    ),
+    bottomNavigationBar: NavBar(
+        currentIndex: 0, 
+        onTap: (index) {
+        },
       ),
     );
   }

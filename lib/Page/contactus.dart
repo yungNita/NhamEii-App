@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'components/backbutton.dart';
-import 'components/background.dart';
-
+import '../components/backbutton.dart';
+import '../components/background.dart';
+import '../components/nav_bar.dart';
 class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Background(
+    return Scaffold(body:  Background(
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -88,6 +88,12 @@ class ContactUs extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    ),
+    bottomNavigationBar: NavBar(
+        currentIndex: 0, 
+        onTap: (index) {
+        },
       ),
     );
   }

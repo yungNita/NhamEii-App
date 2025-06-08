@@ -6,66 +6,82 @@ class Options extends StatelessWidget {
   final String title;
   final String buttonText;
   final String imageAsset;
+  final String image;
   final VoidCallback onPressed;
+  final bool imageLeft;
 
   const Options({
     super.key,
     required this.title,
     required this.buttonText,
     required this.imageAsset,
+    required this.image,
     required this.onPressed,
+    this.imageLeft = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 358,
-      height: 88,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE9E9FF),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Row(
-              children: [
-                const SizedBox(width: 5),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    GradientButton(
-                      onPressed: onPressed,
-                      imageAsset: imageAsset,
-                      text: buttonText,
-                      textStyle: TextStyle(fontSize: 12, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Positioned(
-              right: -20,
-              bottom: -10,
-              child: Image.asset(
-                'assets/images/peng.png',
-                width: 116,
-                height: 116,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 20, bottom: 16),
+      child: Container(
+        height: 110,
+        decoration: BoxDecoration(
+          color: const Color(0xFFE9E9FF),
+          borderRadius: BorderRadius.circular(20),
         ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Row(
+                children:
+                    imageLeft
+                        ? [const SizedBox(width: 10), _buildTextAndButton()]
+                        : [_buildTextAndButton()],
+              ),
+              Positioned(
+                left: imageLeft ? -30 : null,
+                right: imageLeft ? null : -30,
+                bottom: -10,
+                child: Image.asset(
+                  image,
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextAndButton() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment:
+            imageLeft ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 10),
+          Align(
+            alignment: imageLeft ? Alignment.centerRight : Alignment.centerLeft,
+            child: GradientButton(
+              width: 90,
+              onPressed: onPressed,
+              imageAsset: imageAsset,
+              text: buttonText,
+              textStyle: const TextStyle(fontSize: 13, color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }

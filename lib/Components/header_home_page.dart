@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'background.dart';
+
 import 'button.dart';
 import 'header.dart';
 import 'options.dart';
@@ -27,10 +27,7 @@ class HeaderHomePage extends StatelessWidget {
         const SizedBox(height: 10),
         const Text(
           'អត់ដឹងញុាំអីែមន',
-          style: TextStyle(
-            fontSize: 22,
-            fontFamily: 'Kh BL LazySmooth',
-          ),
+          style: TextStyle(fontSize: 22, fontFamily: 'Kh BL LazySmooth'),
         ),
         const SizedBox(height: 16),
         Row(
@@ -50,16 +47,17 @@ class HeaderHomePage extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: promotions.map((promo) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Promotions(
-                  imagePath: promo['image']!,
-                  label: promo['label']!,
-                  onTap: null,
-                ),
-              );
-            }).toList(),
+            children:
+                promotions.map((promo) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Promotions(
+                      imagePath: promo['image']!,
+                      label: promo['label']!,
+                      onTap: null,
+                    ),
+                  );
+                }).toList(),
           ),
         ),
         const SizedBox(height: 20),
@@ -67,6 +65,7 @@ class HeaderHomePage extends StatelessWidget {
           title: 'Spin the wheel to get a suggestion!',
           buttonText: 'Spin!!',
           imageAsset: 'assets/images/wheel.png',
+          image: 'assets/images/peng.png',
           onPressed: () {
             print('Option 1 clicked');
           },
@@ -76,6 +75,8 @@ class HeaderHomePage extends StatelessWidget {
           title: 'Answer questions for a recommendation!',
           buttonText: 'Start!!',
           imageAsset: 'assets/images/qna.png',
+          image: 'assets/images/peng2.png',
+          imageLeft: true,
           onPressed: () {
             print('Option 2 clicked');
           },

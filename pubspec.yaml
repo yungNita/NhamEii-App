@@ -89,6 +89,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/category/
+    - assets/images/food/khmer/
     - assets/icons/
     # - assets/fonts/Kh BL LazySmooth/
     # - assets/fonts/Poppins/

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Page/home_page.dart';
-import 'splashscreen.dart';
+import 'Page/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 14),
         ),
       ),
-
       home: const SplashScreen(), // Start with splash screen
     );
   }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nhameii/Components/category_card.dart';
 import 'package:nhameii/Components/promo_card.dart';
+
+import '/components/seemore_button.dart';
 import '../Components/food_card.dart';
 import '../Components/gradient_background.dart';
-import '../Components/nav_bar.dart'; 
 import '../Components/header_home_page.dart';
+import '../Components/nav_bar.dart';
+import 'categorylist.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -44,22 +47,31 @@ class HomePage extends StatelessWidget {
       ),
     ];
 
-    final List<Widget> categoryCard = [
+    final List<CategoryCard> categoryCard = [
       CategoryCard(
         title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        imagePath: 'assets/images/category/khmer.png',
+        type: ['Asian'],
       ),
       CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        title: 'Burger',
+        imagePath: 'assets/images/category/burger.png',
+        type: ['Western'],
       ),
       CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        title: 'Green Salad',
+        imagePath: 'assets/images/category/salad.png',
+        type: ['Vegetarian'],
       ),
       CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        title: 'Cake',
+        imagePath: 'assets/images/category/cake.png',
+        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
+      ),
+      CategoryCard(
+        title: 'Pastry',
+        imagePath: 'assets/images/category/pastry.png',
+        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
       ),
     ];
 
@@ -69,7 +81,6 @@ class HomePage extends StatelessWidget {
       PromoCard(imagePath: 'assets/promo1.jpg'),
       PromoCard(imagePath: 'assets/promo1.jpg'),
       PromoCard(imagePath: 'assets/promo1.jpg'),
-      
     ];
 
     return GradientBackground(
@@ -77,12 +88,12 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 0, bottom: 80), 
+            padding: const EdgeInsets.only(left: 18.0, right: 0, bottom: 80),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const HeaderHomePage(),
-                
+
                 const SizedBox(height: 40),
                 const Text(
                   'Popular Card',
@@ -99,12 +110,15 @@ class HomePage extends StatelessWidget {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: foodCards.map((card) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: card,
-                        );
-                      }).toList(),
+                      children:
+                          foodCards.map((card) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                              ),
+                              child: card,
+                            );
+                          }).toList(),
                     ),
                   ),
                 ),
@@ -121,12 +135,17 @@ class HomePage extends StatelessWidget {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: categoryCard.map((ccard) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                          child: ccard,
-                        );
-                      }).toList(),
+                      children: [
+                        ...categoryCard.map(
+                          (ccard) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 3.0,
+                            ),
+                            child: ccard,
+                          ),
+                        ),
+                        SeemoreButton(destination: Categorylist()),
+                      ],
                     ),
                   ),
                 ),
@@ -145,21 +164,24 @@ class HomePage extends StatelessWidget {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: promoCards.map((cardd) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                          child: cardd,
-                        );
-                      }).toList(),
+                      children:
+                          promoCards.map((cardd) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 3.0,
+                              ),
+                              child: cardd,
+                            );
+                          }).toList(),
                     ),
-                  )
-                )
+                  ),
+                ),
               ],
             ),
           ),
         ),
         bottomNavigationBar: NavBar(
-          currentIndex: 0, 
+          currentIndex: 0,
           onTap: (index) {
             print("Tapped index: $index");
           },
