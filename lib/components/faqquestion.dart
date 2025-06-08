@@ -17,7 +17,7 @@ class _FaqItemState extends State<FaqQuestion> {
     setState(() {
       _isOpen = !_isOpen;
     });
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {

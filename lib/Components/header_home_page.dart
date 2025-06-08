@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'background.dart';
 import 'button.dart';
 import 'header.dart';
 import 'options.dart';
@@ -68,7 +67,7 @@ class HeaderHomePage extends StatelessWidget {
           buttonText: 'Spin!!',
           imageAsset: 'assets/images/wheel.png',
           onPressed: () {
-            print('Option 1 clicked');
+            // print('Option 1 clicked');
           },
         ),
         const SizedBox(height: 20),
@@ -77,7 +76,7 @@ class HeaderHomePage extends StatelessWidget {
           buttonText: 'Start!!',
           imageAsset: 'assets/images/qna.png',
           onPressed: () {
-            print('Option 2 clicked');
+            // print('Option 2 clicked');
           },
         ),
       ],

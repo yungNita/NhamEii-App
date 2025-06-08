@@ -10,7 +10,7 @@ class CategoryCard extends StatelessWidget {
     required this.title,
     required this.imagePath,
     this.onTap,
-  });
+  }); 
 
   @override
   Widget build(BuildContext context) {

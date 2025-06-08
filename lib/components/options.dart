@@ -14,7 +14,7 @@ class Options extends StatelessWidget {
     required this.buttonText,
     required this.imageAsset,
     required this.onPressed,
-  });
+  }); 
 
   @override
   Widget build(BuildContext context) {

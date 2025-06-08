@@ -10,7 +10,7 @@ class Promotions extends StatelessWidget {
     required this.imagePath,
     required this.label,
     this.onTap,
-  });
+  }); 
 
   @override
   Widget build(BuildContext context) {

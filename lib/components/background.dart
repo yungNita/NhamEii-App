@@ -14,7 +14,7 @@ class Background extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [Color(0xFFCED0FD), Color(0xFFEADCF4), Color(0xFFF9DEEA)],
         ),
-      ),
+      ), 
       child: SafeArea(
         child: Material(
           color: Colors.transparent, 

@@ -14,7 +14,7 @@ class BackButtonWidget extends StatelessWidget {
       ),
       onPressed: () {
         Navigator.pop(context); // Pops to previous screen
-      },
+      }, 
     );
   }
 }

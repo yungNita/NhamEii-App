@@ -6,7 +6,7 @@ class PromoCard extends StatelessWidget {
   const PromoCard({
     super.key,
     required this.imagePath,
-  });
+  }); 
 
   @override
   Widget build(BuildContext context) {

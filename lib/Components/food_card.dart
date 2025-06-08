@@ -10,7 +10,7 @@ class FoodCard extends StatelessWidget {
     required this.imageUrl,
     required this.title,
     required this.price,
-  });
+  }); 
 
   @override
   Widget build(BuildContext context) {

@@ -15,7 +15,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w700,
           fontSize: 13,
         ),
-      ),
+      ), 
       actions: <Widget>[
         SvgPicture.asset('assets/icons/like.svg'),
         const SizedBox(width: 10),

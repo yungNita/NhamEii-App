@@ -8,7 +8,7 @@ class Searchbar extends StatelessWidget {
     super.key,
     required this.onChanged,
     this.hintText = 'Search',
-  });
+  }); 
 
   @override
   Widget build(BuildContext context) {

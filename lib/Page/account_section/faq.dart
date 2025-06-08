@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../components/backbutton.dart';
-import '../components/background.dart';
-import '../components/button.dart';
-import '../components/faqquestion.dart';
+import '../../components/backbutton.dart';
+import '../../components/background.dart';
+import '../../components/button.dart';
+import '../../components/faqquestion.dart';
 import 'contactus.dart';
 
 class Faqs extends StatelessWidget {
@@ -44,6 +44,8 @@ class Faqs extends StatelessWidget {
           "Creating an account helps us tailor recommendations and store your preferences securely.",
     },
   ];
+
+  
 
   @override
   Widget build(BuildContext context) {

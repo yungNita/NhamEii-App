@@ -153,7 +153,9 @@ class HomePage extends StatelessWidget {
                       }).toList(),
                     ),
                   )
-                )
+                ),
+
+                  // MyAccountPage(),
               ],
             ),
           ),
@@ -161,7 +163,7 @@ class HomePage extends StatelessWidget {
         bottomNavigationBar: NavBar(
           currentIndex: 0, 
           onTap: (index) {
-            print("Tapped index: $index");
+            // print("Tapped index: $index");
           },
         ),
       ),
