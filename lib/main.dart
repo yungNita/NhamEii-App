@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
-import 'Page/login-screen.dart';
-import 'Page/sign-up.dart';
-import 'Page/edit-profile.dart';
+import 'package:nhameii/Page/account_section/account_page.dart';
+import 'package:nhameii/router/app_router.dart';
+
+// import 'Page/home_page.dart';
+// import 'Page/splashscreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NhamEii App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Sans',
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        fontFamily: 'Poppins',
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 18),
+          headlineSmall: TextStyle(color: Color(0xFF3E0061), fontSize: 24),
+          bodyMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 14),
         ),
       ),
-      initialRoute: '/edit-profile', // ✅ Start from edit profile
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/edit-profile': (context) => const EditProfileScreen(),
-      },
+
+      home: const MyAccountPage(), // Start with splash screen
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
