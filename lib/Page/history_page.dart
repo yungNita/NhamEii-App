@@ -31,7 +31,7 @@ class HistoryPage extends StatelessWidget {
                         },
                         child: const Icon(
                           Icons.arrow_back_ios,
-                          color: Colors.black,
+                          color: Color(0xFF44005E),
                         ),
                       ),
                       const SizedBox(width: 10),

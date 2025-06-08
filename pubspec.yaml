@@ -26,7 +26,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  font_awesome_flutter: ^10.7.0  # ✅ Added properly here
+  font_awesome_flutter: ^10.7.0  
+  flutter_fortune_wheel: ^1.2.0
 
 dev_dependencies:
   flutter_test:
