@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/Page/account_section/account_page.dart';
+import 'package:nhameii/Page/splashscreen.dart';
 import 'package:nhameii/router/app_router.dart';
 
 // import 'Page/home_page.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: const MyAccountPage(), // Start with splash screen
+      home: const SplashScreen(), // Start with splash screen
       onGenerateRoute: AppRouter.generateRoute,
     );
   }
