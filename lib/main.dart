@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nhameii/Page/splashscreen.dart';
 import 'package:nhameii/router/app_router.dart';
 
-import 'Page/splashscreen.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -25,7 +23,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: AppRouter.generateRoute,
       home: const SplashScreen(), // Start with splash screen
-      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }

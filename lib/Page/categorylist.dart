@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/background.dart';
-import 'package:nhameii/components/category_card.dart';
-import 'package:nhameii/components/filterbutton.dart';
-import 'package:nhameii/components/header.dart';
-import 'package:nhameii/components/nav_bar.dart';
+import 'package:nhameii/components/cards/category_card.dart';
+import 'package:nhameii/components/homepage_component/filterbutton.dart';
+import 'package:nhameii/components/homepage_component/header.dart';
+import 'package:nhameii/components/navigation_bar/nav_bar.dart';
 
 import '../data/categoryitem.dart';
 
 class Categorylist extends StatefulWidget {
+  const Categorylist({super.key});
+
   @override
   State<Categorylist> createState() => _CategorylistState();
 }

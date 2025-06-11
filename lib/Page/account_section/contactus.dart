@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nhameii/components/backbutton.dart';
+import 'package:nhameii/components/background.dart';
+import 'package:nhameii/components/navigation_bar/nav_bar.dart';
 
-<<<<<<<< HEAD:lib/Page/account_section/contactus.dart
-import '../../components/backbutton.dart';
-import '../../components/background.dart';
 
-========
-import '../components/backbutton.dart';
-import '../components/background.dart';
-import '../components/nav_bar.dart';
->>>>>>>> lita_food_detail:lib/Page/contactus.dart
+
 class ContactUs extends StatelessWidget {
   const ContactUs({super.key});
 

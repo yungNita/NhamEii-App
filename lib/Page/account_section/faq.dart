@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/nav_bar.dart';
-
-<<<<<<<< HEAD:lib/Page/account_section/faq.dart
-import '../../components/backbutton.dart';
-import '../../components/background.dart';
-import '../../components/button.dart';
-import '../../components/faqquestion.dart';
-========
-import '../components/backbutton.dart';
-import '../components/background.dart';
-import '../components/button.dart';
-import '../components/faqquestion.dart';
->>>>>>>> lita_food_detail:lib/Page/faq.dart
-import 'contactus.dart';
+import 'package:nhameii/Page/account_section/contactus.dart';
+import 'package:nhameii/components/backbutton.dart';
+import 'package:nhameii/components/background.dart';
+import 'package:nhameii/components/button.dart';
+import 'package:nhameii/components/account_setting/faqquestion.dart';
+import 'package:nhameii/components/navigation_bar/nav_bar.dart';
 
 class Faqs extends StatelessWidget {
   Faqs({super.key});

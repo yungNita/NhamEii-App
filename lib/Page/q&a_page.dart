@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import '../components/nav_wrapper.dart';
+import '../components/navigation_bar/nav_wrapper.dart';
 
 class QAPage extends StatelessWidget {
   const QAPage({super.key});

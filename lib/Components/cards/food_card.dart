@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Page/food_detail.dart';
+import '../../Page/food_detail.dart';
 
 
 class FoodCard extends StatelessWidget {
@@ -60,7 +60,7 @@ class FoodCard extends StatelessWidget {
               left: -15.5,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child: Container(
+                child: SizedBox(
                   width: 160,
                   height: 160,
                   child: Image.asset(imageUrl, width: 120, height: 120),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/background.dart';
-import 'package:nhameii/components/food_card.dart';
-import 'package:nhameii/components/header.dart';
+import 'package:nhameii/components/cards/food_card.dart';
+import 'package:nhameii/components/homepage_component/header.dart';
 import 'package:nhameii/data/fooditem.dart';
 
 class FoodlistBycategory extends StatefulWidget {

@@ -1,4 +1,5 @@
 import 'package:nhameii/Page/game_page.dart' ;
+import 'package:nhameii/Page/history_page.dart';
 import 'package:nhameii/Page/home_page.dart';
 import 'package:nhameii/Page/q&a_page.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:nhameii/Page/account_section/account_page.dart';
 import 'package:nhameii/Page/account_section/contactus.dart';
 import 'package:nhameii/Page/account_section/edit-profile.dart';
 import 'package:nhameii/Page/account_section/faq.dart';
-import 'package:nhameii/Page/account_section/history_page.dart';
 import 'package:nhameii/Page/account_section/log-in.dart';
 import 'package:nhameii/Page/account_section/notification_page.dart';
 import 'package:nhameii/Page/account_section/sign-up.dart';
@@ -42,7 +42,7 @@ class AppRouter {
       case '/about-us':
         return MaterialPageRoute(builder: (_) => const AboutUsPage());
 
-      case 'faq':
+      case '/faq':
         return MaterialPageRoute(builder: (_) => Faqs());
       
       case '/term-and-polocies':
@@ -59,6 +59,8 @@ class AppRouter {
 
       case '/sign-up':
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
+
+        
 
       default:
         return MaterialPageRoute(

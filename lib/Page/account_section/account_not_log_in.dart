@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/Components/account_button.dart';
-import 'package:nhameii/Components/account_header.dart';
-import 'package:nhameii/Components/account_menu_container.dart';
 import 'package:nhameii/Components/gradient_background.dart';
+import 'package:nhameii/components/account_setting/account_button.dart';
+import 'package:nhameii/components/account_setting/account_header.dart';
+import 'package:nhameii/components/account_setting/account_menu_container.dart';
 
 class AccountNotLogIn extends StatefulWidget {
   const AccountNotLogIn({super.key});

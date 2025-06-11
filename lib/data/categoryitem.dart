@@ -1,4 +1,4 @@
-import 'package:nhameii/components/category_card.dart';
+import 'package:nhameii/components/cards/category_card.dart';
 
 final List<CategoryCard> allCategoryCards = [
   CategoryCard(

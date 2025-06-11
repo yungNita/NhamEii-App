@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/gradient_background.dart';
-import '../components/nav_wrapper.dart';
-import '../components/history_card.dart';
+import '../components/navigation_bar/nav_wrapper.dart';
+import '../components/cards/history_card.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -25,15 +26,7 @@ class HistoryPage extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacementNamed(context, '/home');
-                        },
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xFF44005E),
-                        ),
-                      ),
+                     const BackButtonWidget(),
                       const SizedBox(width: 10),
                       const Text(
                         'History Log',

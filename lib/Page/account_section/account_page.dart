@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/Components/account_button.dart';
-import 'package:nhameii/Components/account_header.dart';
-import 'package:nhameii/Components/account_menu_container.dart';
 import 'package:nhameii/Components/gradient_background.dart';
+import 'package:nhameii/components/account_setting/account_button.dart';
+import 'package:nhameii/components/account_setting/account_header.dart';
+import 'package:nhameii/components/account_setting/account_menu_container.dart';
 
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({super.key});
@@ -93,11 +93,12 @@ class _MyAccountPageState extends State<MyAccountPage> {
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+            padding: const EdgeInsets.only(top: 36, right: 22, left: 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
+               
                 AccountHeader(name: 'Kasibook', email: 'Kasibook@gmail.com' ),
                 
                 const SizedBox(height: 18),
@@ -127,12 +128,12 @@ class _MyAccountPageState extends State<MyAccountPage> {
                       'Notifications',
                       '/notification',
                     ),
-                    _buildMenuItem(
-                      context,
-                      Icons.info_outline,
-                      'About Us',
-                      '/about-us',
-                    ),
+                    // _buildMenuItem(
+                    //   context,
+                    //   Icons.info_outline,
+                    //   'About Us',
+                    //   '/about-us',
+                    // ),
                     _buildMenuItem(
                       context,
                       Icons.support_outlined,
@@ -143,7 +144,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                       context,
                       Icons.sticky_note_2_sharp,
                       'Term and Policy',
-                      '/term-and-policy',
+                      '/term-and-polocies',
                     ),
                     _buildMenuItem(
                       context,

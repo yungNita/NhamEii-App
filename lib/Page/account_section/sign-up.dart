@@ -1,7 +1,9 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nhameii/Components/account_button.dart';
 import 'package:nhameii/Components/backbutton.dart';
+import 'package:nhameii/components/account_setting/account_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

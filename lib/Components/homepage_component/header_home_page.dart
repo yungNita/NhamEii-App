@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'button.dart';
-import 'options.dart';
-import 'promo_card.dart';
+import '../button.dart';
+import '../options.dart';
+import 'promotion.dart';
+import 'header.dart';
+import 'searchbar.dart';
 
 class HeaderHomePage extends StatelessWidget {
   const HeaderHomePage({super.key});
@@ -65,7 +67,7 @@ class HeaderHomePage extends StatelessWidget {
           imageAsset: 'assets/images/wheel.png',
           image: 'assets/images/peng.png',
           onPressed: () {
-            print('Option 1 clicked');
+            // print('Option 1 clicked');
           },
         ),
         const SizedBox(height: 20),
@@ -76,7 +78,7 @@ class HeaderHomePage extends StatelessWidget {
           image: 'assets/images/peng2.png',
           imageLeft: true,
           onPressed: () {
-            print('Option 2 clicked');
+            // print('Option 2 clicked');
           },
         ),
       ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Page/foodlist_bycategory.dart';
+import '../../Page/foodlist_bycategory.dart';
 
 class CategoryCard extends StatelessWidget {
   final String title;

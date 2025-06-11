@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/nav_bar.dart';
-
-<<<<<<<< HEAD:lib/Page/account_section/termsnpolicies.dart
-import '../../components/backbutton.dart';
-import '../../components/background.dart';
-========
-import '../components/backbutton.dart';
-import '../components/background.dart';
->>>>>>>> lita_food_detail:lib/Page/termsnpolicies.dart
+import 'package:nhameii/components/backbutton.dart';
+import 'package:nhameii/components/background.dart';
+import 'package:nhameii/components/navigation_bar/nav_bar.dart';
 
 class Termsnpolicies extends StatelessWidget {
   const Termsnpolicies({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'button.dart';
+import '../button.dart';
 
 class FilterButton extends StatelessWidget {
   final String label;
@@ -34,7 +34,7 @@ class FilterButton extends StatelessWidget {
         onTap: onPressed,
         child: Container(
           height: 36,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.only(left: 10, right: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: Color(0xFFD8007A)),
@@ -49,6 +49,7 @@ class FilterButton extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
+          
         ),
       );
     }

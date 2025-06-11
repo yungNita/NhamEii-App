@@ -9,7 +9,7 @@ class BackButtonWidget extends StatelessWidget {
       icon: Icon(
         Icons.arrow_back_ios_new_rounded,
         color: Color(0xFF3E0061),
-        size: 30,
+        size: 24,
       ),
       onPressed: () {
         Navigator.pop(context); // Pops to previous screen

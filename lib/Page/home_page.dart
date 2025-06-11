@@ -1,16 +1,13 @@
 
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/category_card.dart';
-import 'package:nhameii/components/nav_wrapper.dart';
-import 'package:nhameii/components/promo_card.dart';
-
-import '/components/seemore_button.dart';
-import '../components/food_card.dart';
+import 'package:nhameii/Page/categorylist.dart';
+import 'package:nhameii/components/cards/category_card.dart';
+import 'package:nhameii/components/homepage_component/header_home_page.dart';
+import 'package:nhameii/components/homepage_component/seemore_button.dart';
+import 'package:nhameii/components/navigation_bar/nav_wrapper.dart';
+import 'package:nhameii/components/cards/promo_card.dart';
+import '../components/cards/food_card.dart';
 import '../components/gradient_background.dart';
-import '../components/header_home_page.dart';
-import '../Components/nav_bar.dart';
-import 'categorylist.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -101,7 +98,8 @@ class HomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 40),
+                  const HeaderHomePage(),
+                  const SizedBox(height: 26),
                   const Text(
                     'Popular Card',
                     style: TextStyle(
@@ -130,33 +128,26 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Text(
-                    'Category',
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF44005E),
-                    ),
-                  ),
                   SizedBox(
-                    height: 200,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children:
-                            categoryCard
-                                .map(
-                                  (ccard) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 3.0,
-                                    ),
-                                    child: ccard,
-                                  ),
-                                )
-                                .toList(),
-                      ),
+                  height: 200,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        ...categoryCard.map(
+                          (ccard) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 3.0,
+                            ),
+                            child: ccard,
+                          ),
+                        ),
+                        SeemoreButton(destination: Categorylist()),
+                      ],
                     ),
                   ),
+                ),
+                  
                   const SizedBox(height: 20),
                   const Text(
                     'Promotions',
@@ -186,7 +177,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 100), // extra space at bottom
+                  const SizedBox(height: 70), // extra space at bottom
                 ],
               ),
             ),

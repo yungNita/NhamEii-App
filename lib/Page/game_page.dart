@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import '../components/nav_wrapper.dart';
+import '../components/navigation_bar/nav_wrapper.dart';
 import '../components/gradient_background.dart';
 
 class GamePage extends StatefulWidget {
