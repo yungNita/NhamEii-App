@@ -1,44 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:nhameii/Page/account_page.dart';
 import 'package:nhameii/Page/game_page.dart' ;
-import 'package:nhameii/Page/history_page.dart';
 import 'package:nhameii/Page/home_page.dart';
 import 'package:nhameii/Page/q&a_page.dart';
-
-
-class AppRouter {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case '/home':
-        return _fadeRoute(const HomePage());
-      case '/game':
-        return _fadeRoute(const GamePage());
-      case '/qa':
-        return _fadeRoute(const QAPage());
-      case '/history':
-        return _fadeRoute(const HistoryPage());
-      case '/account':
-        return _fadeRoute(const AccountPage());
-      default:
-        return _fadeRoute(const Scaffold(
-          body: Center(child: Text('404: Page Not Found')),
-        ));
-    }
-  }
-
-  static PageRouteBuilder _fadeRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 300),
-    );
-  }
-}
 import 'package:flutter/material.dart';
 import 'package:nhameii/Page/account_section/about_us.dart';
 import 'package:nhameii/Page/account_section/account_not_log_in.dart';
@@ -53,17 +15,23 @@ import 'package:nhameii/Page/account_section/sign-up.dart';
 import 'package:nhameii/Page/account_section/termsnpolicies.dart';
 import 'package:nhameii/Page/account_section/wishlist_page.dart';
 
+
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => const MyAccountPage());
+      case '/home':
+        return _fadeRoute(const HomePage());
+      case '/game':
+        return _fadeRoute(const GamePage());
+      case '/qa':
+        return _fadeRoute(const QAPage());
+      case '/history':
+        return _fadeRoute(const HistoryPage());
+      case '/account':
+        return _fadeRoute(const MyAccountPage());
 
       case '/edit_profile':
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
-
-      case '/history':
-        return MaterialPageRoute(builder: (_) => const HistoryPage());
       
       case '/wishlist':
         return MaterialPageRoute(builder: (_) => const WishlistPage());
@@ -99,6 +67,19 @@ class AppRouter {
           ),
         );
     }
+  }
+
+  static PageRouteBuilder _fadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 300),
+    );
   }
 }
 

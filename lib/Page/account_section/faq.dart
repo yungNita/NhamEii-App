@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/components/nav_bar.dart';
 
+<<<<<<<< HEAD:lib/Page/account_section/faq.dart
 import '../../components/backbutton.dart';
 import '../../components/background.dart';
 import '../../components/button.dart';
 import '../../components/faqquestion.dart';
+========
+import '../components/backbutton.dart';
+import '../components/background.dart';
+import '../components/button.dart';
+import '../components/faqquestion.dart';
+>>>>>>>> lita_food_detail:lib/Page/faq.dart
 import 'contactus.dart';
 
 class Faqs extends StatelessWidget {
@@ -52,7 +60,7 @@ class Faqs extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Background(
+    return Scaffold( body:  Background(
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -132,6 +140,12 @@ class Faqs extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    ),
+    bottomNavigationBar: NavBar(
+        currentIndex: 0, 
+        onTap: (index) {
+        },
       ),
     );
   }

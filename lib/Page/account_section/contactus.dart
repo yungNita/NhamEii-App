@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+<<<<<<<< HEAD:lib/Page/account_section/contactus.dart
 import '../../components/backbutton.dart';
 import '../../components/background.dart';
 
+========
+import '../components/backbutton.dart';
+import '../components/background.dart';
+import '../components/nav_bar.dart';
+>>>>>>>> lita_food_detail:lib/Page/contactus.dart
 class ContactUs extends StatelessWidget {
   const ContactUs({super.key});
 
@@ -11,7 +17,7 @@ class ContactUs extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Background(
+    return Scaffold(body:  Background(
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -90,6 +96,12 @@ class ContactUs extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    ),
+    bottomNavigationBar: NavBar(
+        currentIndex: 0, 
+        onTap: (index) {
+        },
       ),
     );
   }

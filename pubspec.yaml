@@ -29,6 +29,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   image_picker: ^1.0.7
   shared_preferences: ^2.2.2   # ✅ Added for storing profile image path
+  flutter_fortune_wheel: ^1.3.2
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/category/
+    - assets/images/food/khmer/
     - assets/icons/
     - assets/images/navigation_bar/
 

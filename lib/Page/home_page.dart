@@ -1,10 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:nhameii/components/category_card.dart';
+import 'package:nhameii/components/nav_wrapper.dart';
 import 'package:nhameii/components/promo_card.dart';
+
+import '/components/seemore_button.dart';
 import '../components/food_card.dart';
 import '../components/gradient_background.dart';
-import '../components/nav_wrapper.dart';
+import '../components/header_home_page.dart';
+import '../Components/nav_bar.dart';
+import 'categorylist.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -43,23 +49,31 @@ class HomePage extends StatelessWidget {
       ),
     ];
 
-   
-    final List<Widget> categoryCard = [
+    final List<CategoryCard> categoryCard = [
       CategoryCard(
         title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        imagePath: 'assets/images/category/khmer.png',
+        type: ['Asian'],
       ),
       CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        title: 'Burger',
+        imagePath: 'assets/images/category/burger.png',
+        type: ['Western'],
       ),
       CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        title: 'Green Salad',
+        imagePath: 'assets/images/category/salad.png',
+        type: ['Vegetarian'],
       ),
       CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/khmerFood.jpg',
+        title: 'Cake',
+        imagePath: 'assets/images/category/cake.png',
+        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
+      ),
+      CategoryCard(
+        title: 'Pastry',
+        imagePath: 'assets/images/category/pastry.png',
+        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
       ),
     ];
 
@@ -69,7 +83,6 @@ class HomePage extends StatelessWidget {
       PromoCard(imagePath: 'assets/promo1.jpg'),
       PromoCard(imagePath: 'assets/promo1.jpg'),
       PromoCard(imagePath: 'assets/promo1.jpg'),
-      
     ];
     return NavWrapper(
     currentIndex: 0, //current index for HomePage
