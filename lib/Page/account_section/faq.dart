@@ -7,6 +7,7 @@ import '../../components/faqquestion.dart';
 import 'contactus.dart';
 
 class Faqs extends StatelessWidget {
+  Faqs({super.key});
   final List<Map<String, String>> faqData = [
     {
       "question": "What is NhamEii?",

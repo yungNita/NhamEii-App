@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Color(0xFF3E0061), fontSize: 14),
         ),
       ),
-
+      initialRoute: '/',
+      onGenerateRoute: AppRouter.generateRoute,
       home: const SplashScreen(), // Start with splash screen
       onGenerateRoute: AppRouter.generateRoute,
     );

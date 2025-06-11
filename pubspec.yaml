@@ -77,3 +77,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/icons/
+    - assets/images/navigation_bar/
+
+    # - assets/fonts/Kh BL LazySmooth/
+    # - assets/fonts/Poppins/
