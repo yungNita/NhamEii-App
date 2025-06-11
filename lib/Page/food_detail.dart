@@ -24,14 +24,13 @@ class FoodDetail extends StatelessWidget {
           child: SingleChildScrollView(
             child: Stack(
               children: [
-                // 👇 Background image at the bottom
                 Container(
                   height: 400,
                   width: double.infinity,
                   alignment: Alignment.center,
                   child: Image.asset(
                     'assets/images/background3.png',
-                    fit: BoxFit.none, // keeps original size
+                    fit: BoxFit.cover, 
                   ),
                 ),
                 Padding(
@@ -63,7 +62,6 @@ class FoodDetail extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -75,7 +73,6 @@ class FoodDetail extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black,
                                 ),
                               ),
                               Row(
@@ -107,7 +104,6 @@ class FoodDetail extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
-                          color: Colors.black,
                         ),
                       ),
                       const SizedBox(height: 10),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/cards/category_card.dart';
 import 'package:nhameii/components/homepage_component/filterbutton.dart';
@@ -64,7 +63,6 @@ class _CategorylistState extends State<Categorylist> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    BackButtonWidget(),
                     Text(
                       'Categories',
                       style: textTheme.titleMedium?.copyWith(

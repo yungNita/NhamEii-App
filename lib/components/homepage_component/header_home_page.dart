@@ -30,7 +30,7 @@ class HeaderHomePage extends StatelessWidget {
           style: TextStyle(fontSize: 22, fontFamily: 'Kh BL LazySmooth'),
         ),
         const SizedBox(height: 16),
-        Row(
+        Padding(padding: EdgeInsets.only(right:16), child: Row(
           children: [
             Expanded(child: Searchbar(onChanged: (query) {})),
             const SizedBox(width: 8),
@@ -42,7 +42,7 @@ class HeaderHomePage extends StatelessWidget {
               width: 55,
             ),
           ],
-        ),
+        ),),
         const SizedBox(height: 16),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -72,7 +72,7 @@ class HeaderHomePage extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Options(
-          title: 'Answer questions for a recommendation!',
+          title: 'Answer questions for suggestions!',
           buttonText: 'Start!!',
           imageAsset: 'assets/images/qna.png',
           image: 'assets/images/peng2.png',

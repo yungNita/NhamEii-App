@@ -15,34 +15,40 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> foodCards = [
       FoodCard(
-        imageUrl: 'assets/fish_tomato_mix.png',
-        title: 'Fish Tomato \nSalad',
-        price: '\$12.99',
+      title: 'Fish Amok',
+    price: '\$4.99',
+    imageUrl: 'assets/images/food/khmer/amok.png',
+    // category: 'Khmer Food',
       ),
       FoodCard(
-        imageUrl: 'assets/fish_tomato_mix.png',
-        title: 'Chicken \nCurry',
-        price: '\$9.99',
+      title: 'Bok Kapi',
+    price: '\$4.99',
+    imageUrl: 'assets/images/food/khmer/bokkapii.png',
+    // category: 'Khmer Food',
       ),
       FoodCard(
-        imageUrl: 'assets/fish_tomato_mix.png',
-        title: 'Beef Noodle',
-        price: '\$10.50',
+      title: 'Grilled Fish',
+    price: '\$4.99',
+    imageUrl: 'assets/images/food/khmer/fishang.png',
+    // category: 'Khmer Food',
       ),
       FoodCard(
-        imageUrl: 'assets/fish_tomato_mix.png',
-        title: 'Fish Tomato \nSalad',
-        price: '\$12.99',
+      title: 'Somlor Korko',
+    price: '\$4.99',
+    imageUrl: 'assets/images/food/khmer/kako.png',
+    // category: 'Khmer Food',
       ),
       FoodCard(
-        imageUrl: 'assets/fish_tomato_mix.png',
-        title: 'Chicken \nCurry',
-        price: '\$9.99',
+      title: 'Koung',
+    price: '\$4.99',
+    imageUrl: 'assets/images/food/khmer/koung.png',
+    // category: 'Khmer Food',
       ),
       FoodCard(
-        imageUrl: 'assets/fish_tomato_mix.png',
-        title: 'Beef Noodle',
-        price: '\$10.50',
+      title: 'Loklak',
+    price: '\$4.99',
+    imageUrl: 'assets/images/food/khmer/loklak.png',
+    // category: 'Khmer Food',
       ),
     ];
 
@@ -110,7 +116,7 @@ class HomePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
-                      height: 245,
+                      height: 280,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -119,7 +125,7 @@ class HomePage extends StatelessWidget {
                                   .map(
                                     (card) => Padding(
                                       padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0,
+                                        horizontal: 12.0,
                                       ),
                                       child: card,
                                     ),

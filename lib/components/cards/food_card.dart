@@ -56,14 +56,14 @@ class FoodCard extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: -90,
-              left: -15.5,
+              top: -70,
+              left: -8,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: SizedBox(
-                  width: 160,
-                  height: 160,
-                  child: Image.asset(imageUrl, width: 120, height: 120),
+                  width: 140,
+                  height: 140,
+                  child: Image.asset(imageUrl, width: 100, height: 100),
                 ),
               ),
             ),

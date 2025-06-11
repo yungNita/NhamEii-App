@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/cards/food_card.dart';
 import 'package:nhameii/components/homepage_component/header.dart';
@@ -36,7 +35,6 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
               padding: const EdgeInsets.only(left: 20.0, bottom: 10),
               child: Row(
                 children: [
-                  BackButtonWidget(),
                   const SizedBox(width: 10),
                   Text(
                     widget.title,
@@ -51,13 +49,13 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 100,
+                  vertical: 60,
                   horizontal: 20,
                 ),
                 child: Wrap(
                   alignment: WrapAlignment.start,
-                  spacing: 80, // Horizontal space between cards
-                  runSpacing: 100, // Vertical space between rows
+                  spacing: 40, // Horizontal space between cards
+                  runSpacing: 80, // Vertical space between rows
                   children:
                       filteredFoodItems.map((item) {
                         return SizedBox(
