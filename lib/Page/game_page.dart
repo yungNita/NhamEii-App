@@ -146,21 +146,21 @@ class _GamePageState extends State<GamePage> {
               const SizedBox(height: 24),
 
               // pin Button
-              ElevatedButton(
-                onPressed: spinWheel,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7F3DFF),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 14,
-                  ),
-                ),
-                child: const Text("Spin", style: TextStyle(fontSize: 16)),
-              ),
+              // ElevatedButton(
+              //   onPressed: spinWheel,
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: const Color(0xFF7F3DFF),
+              //     foregroundColor: Colors.white,
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(12),
+              //     ),
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 32,
+              //       vertical: 14,
+              //     ),
+              //   ),
+              //   child: const Text("Spin", style: TextStyle(fontSize: 16)),
+              // ),
 
               const SizedBox(height: 30),
             ],

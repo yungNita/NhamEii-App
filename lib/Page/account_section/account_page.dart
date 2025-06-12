@@ -92,7 +92,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
   @override
   Widget build(BuildContext context) {
     return NavWrapper(
-      currentIndex: 3,
+      currentIndex: 4,
     child: GradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
