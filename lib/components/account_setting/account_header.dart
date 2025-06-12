@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/backbutton.dart';
+
+import '../backbutton.dart';
+
 
 class AccountHeader extends StatelessWidget {
   final String name;

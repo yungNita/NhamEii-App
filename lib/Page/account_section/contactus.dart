@@ -12,6 +12,7 @@ class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    
 
     return Scaffold(body:  Background(
       child: Padding(
@@ -53,7 +54,6 @@ class ContactUs extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 40),
-
                     // Contact Details Section
                     const Divider(),
                     Row(

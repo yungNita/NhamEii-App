@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nhameii/Page/account_section/notification_page.dart';
-import 'package:nhameii/Page/account_section/wishlist_page.dart';
+
+import '../../Page/account_section/notification_page.dart';
+import '../../Page/account_section/wishlist_page.dart';
+// import 'package:nhameii/Page/account_section/notification_page.dart';
+// import 'package:nhameii/Page/account_section/wishlist_page.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
   const Header({super.key});

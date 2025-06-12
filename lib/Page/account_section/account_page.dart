@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/Components/gradient_background.dart';
+// import 'package:nhameii/Components/gradient_background.dart';
 import 'package:nhameii/components/account_setting/account_button.dart';
 import 'package:nhameii/components/account_setting/account_header.dart';
 import 'package:nhameii/components/account_setting/account_menu_container.dart';
+import 'package:nhameii/components/gradient_background.dart';
+
+import '../../components/navigation_bar/nav_wrapper.dart';
 
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({super.key});
@@ -88,7 +91,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientBackground(
+    return NavWrapper(
+      currentIndex: 3,
+    child: GradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -98,7 +103,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
-               
+              
                 AccountHeader(name: 'Kasibook', email: 'Kasibook@gmail.com' ),
                 
                 const SizedBox(height: 18),
@@ -165,6 +170,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
           ),
         ),
       ),
+    ),
     );
   }
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/Components/backbutton.dart';
-import 'package:nhameii/Components/gradient_background.dart';
+// import 'package:nhameii/Components/backbutton.dart';
+// import 'package:nhameii/Components/gradient_background.dart';
 import 'package:nhameii/components/cards/notification_card.dart';
+
+import '../../components/backbutton.dart';
+import '../../components/gradient_background.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});

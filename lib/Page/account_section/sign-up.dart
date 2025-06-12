@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nhameii/Components/backbutton.dart';
+// import 'package:nhameii/Components/backbutton.dart';
 import 'package:nhameii/components/account_setting/account_button.dart';
+
+import '../../components/backbutton.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -52,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         //   ),
                         //   onPressed: () => Navigator.pop(context),
                         // ),
-                         const BackButtonWidget(),
+                        const BackButtonWidget(),
                         const SizedBox(height: 20),
                         const Text(
                           "Hello! Register to get started!",

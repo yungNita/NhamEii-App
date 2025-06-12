@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-import 'package:nhameii/Components/backbutton.dart';
+// import 'package:nhameii/Components/backbutton.dart';
+
+import '../../components/backbutton.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -158,7 +160,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       const SizedBox(height: 24),
                       Row(
-
                         children: [
                           // Padding(
                           //   padding: const EdgeInsets.only(left: 30.0),
@@ -172,7 +173,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           //     ),
                           //   ),
                           // ),
-
                           const SizedBox(width: 12),
                           Padding(
                             padding: const EdgeInsets.only(left: 100.0),
@@ -227,25 +227,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 4,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.purple,
-        unselectedItemColor: Colors.black54,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.videogame_asset),
-            label: "Game",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.question_answer),
-            label: "Q&A",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
-        ],
       ),
     );
   }
