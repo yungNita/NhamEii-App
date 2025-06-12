@@ -99,7 +99,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 36, right: 22, left: 22),
-            child: Column(
+            child: SingleChildScrollView(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
@@ -165,8 +166,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 100),
               ],
             ),
+            )
           ),
         ),
       ),
