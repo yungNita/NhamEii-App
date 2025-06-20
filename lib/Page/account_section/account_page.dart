@@ -4,7 +4,8 @@ import 'package:nhameii/components/account_setting/account_button.dart';
 import 'package:nhameii/components/account_setting/account_header.dart';
 import 'package:nhameii/components/account_setting/account_menu_container.dart';
 import 'package:nhameii/components/gradient_background.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../components/navigation_bar/nav_wrapper.dart';
 
 class MyAccountPage extends StatefulWidget {
@@ -70,8 +71,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
+                            await _logout(); 
                             Navigator.pushReplacementNamed(context, '/account-not-log-in');
                           },
                           child: const Text(
@@ -91,6 +93,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return NavWrapper(
       currentIndex: 4,
     child: GradientBackground(
@@ -103,10 +106,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
               child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-              
-                AccountHeader(name: 'Kasibook', email: 'Kasibook@gmail.com' ),
-                
+                AccountHeader(name: user?.displayName ?? 'Kasibook', email: user?.email ?? 'Kasibook@gmail.com' ),
                 const SizedBox(height: 18),
                 AccountMenuContainer(
                   children: [
@@ -193,5 +193,24 @@ class _MyAccountPageState extends State<MyAccountPage> {
         Navigator.pushNamed(context, routeName);
       },
     );
+  }
+  Future<void> _logout() async {
+    try {
+      // Sign out from Firebase
+      await FirebaseAuth.instance.signOut();
+
+      // Sign out and disconnect from Google 
+      final googleSignIn = GoogleSignIn();
+      if (await googleSignIn.isSignedIn()) {
+        await googleSignIn.disconnect();
+        await googleSignIn.signOut();
+      }
+      print('User logged out successfully.');
+    } catch (e) {
+      print('Logout error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to log out. Please try again.')),
+      );
+    }
   }
 }

@@ -6,12 +6,67 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nhameii/components/account_setting/account_button.dart';
 import '../../components/backbutton.dart';
 import 'sign-up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+  class _LoginScreenState extends State<LoginScreen> {
 
   static const Color primaryColor = Color(0xFF3E0061);
 
+  final _emailController = TextEditingController();
+  final _passwordCotroller = TextEditingController();
+
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordCotroller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signInWithEmail() async {
+    setState(() => _isLoading = true);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordCotroller.text.trim());
+      Navigator.pushReplacementNamed(context, '/');
+    } on FirebaseAuthException catch (e) {
+      String message = 'login fail';
+      if (e.code == 'user-not-found') {
+        message = 'no user found';
+      } else if (e.code == 'wrong-password') {
+        message = 'wrong password';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if(googleUser == null) return;
+
+      final googleAuth = await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      Navigator.pushReplacementNamed(context, '/');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('google log in fail')));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +97,10 @@ class LoginScreen extends StatelessWidget {
 
               // Username/Email field
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person, color: primaryColor),
-                  hintText: "Username or Email",
+                  hintText: "Email",
                   hintStyle: const TextStyle(color: primaryColor),
                   filled: true,
                   fillColor: Colors.white,
@@ -59,6 +115,7 @@ class LoginScreen extends StatelessWidget {
 
               // Password field
               TextField(
+                controller: _passwordCotroller,
                 obscureText: true,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock, color: primaryColor),
@@ -86,11 +143,9 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 48,
 
-                child: AccountButton(
+                child: _isLoading ? const Center(child: CircularProgressIndicator(),): AccountButton(
                   text: 'Log in',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/sign-up');
-                  },
+                  onPressed: _signInWithEmail,
                 ),
               ),
 
@@ -139,10 +194,13 @@ class LoginScreen extends StatelessWidget {
               // Social Login
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: FaIcon(FontAwesomeIcons.google, color: primaryColor),
+                children: [
+                  GestureDetector(
+                    onTap: _signInWithGoogle,
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: FaIcon(FontAwesomeIcons.google, color: primaryColor),
+                    ),
                   ),
                   CircleAvatar(
                     backgroundColor: Colors.white,
