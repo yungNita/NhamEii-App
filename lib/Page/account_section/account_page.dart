@@ -134,12 +134,6 @@ class _MyAccountPageState extends State<MyAccountPage> {
                       'Notifications',
                       '/notification',
                     ),
-                    // _buildMenuItem(
-                    //   context,
-                    //   Icons.info_outline,
-                    //   'About Us',
-                    //   '/about-us',
-                    // ),
                     _buildMenuItem(
                       context,
                       Icons.support_outlined,

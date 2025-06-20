@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/components/button.dart';
 import 'package:nhameii/components/homepage_component/promotion.dart';
 import 'package:nhameii/components/options.dart';
@@ -78,7 +79,7 @@ class HeaderHomePage extends StatelessWidget {
           image: 'assets/images/peng2.png',
           imageLeft: true,
           onPressed: () {
-            print('Option 2 clicked');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => QnAFlowPage()));
           },
         ),
       ],
