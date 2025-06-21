@@ -14,11 +14,14 @@ import 'package:nhameii/Page/account_section/notification_page.dart';
 import 'package:nhameii/Page/account_section/sign-up.dart';
 import 'package:nhameii/Page/account_section/termsnpolicies.dart';
 import 'package:nhameii/Page/account_section/wishlist_page.dart';
+import 'package:nhameii/Page/splashscreen.dart';
 
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case '/':
+        return _fadeRoute(const SplashScreen());
       case '/home':
         return _fadeRoute(const HomePage());
       case '/game':
