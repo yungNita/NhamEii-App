@@ -20,7 +20,7 @@ class NavWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: Colors.transparent,
       body: Stack(

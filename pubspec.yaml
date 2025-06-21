@@ -81,6 +81,7 @@ flutter:
     - assets/images/food/khmer/
     - assets/icons/
     - assets/images/navigation_bar/
+    - assets/images/restaurant/
 
     # - assets/fonts/Kh BL LazySmooth/
     # - assets/fonts/Poppins/
