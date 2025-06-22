@@ -8,12 +8,16 @@ class FoodDetail extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final String detail;
+  final String rating;
 
   const FoodDetail({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
+    required this.detail,
+    required this.rating,
   });
 
   @override
@@ -77,7 +81,7 @@ class FoodDetail extends StatelessWidget {
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
+                                children:  [
                                   Icon(
                                     Icons.star,
                                     color: Colors.amber,
@@ -85,7 +89,7 @@ class FoodDetail extends StatelessWidget {
                                   ),
                                   SizedBox(width: 4),
                                   Text(
-                                    '4.9',
+                                    rating,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -107,8 +111,8 @@ class FoodDetail extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'This delicious Cambodian dish is perfect for anyone looking to enjoy a rich and traditional flavor. Made with fresh ingredients and cooked with love.',
+                       Text(
+                        detail,
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 50),
@@ -122,7 +126,7 @@ class FoodDetail extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          GradientButton(onPressed: () {}, text: 'Add to Cart'),
+                          GradientButton(onPressed: () {}, text: 'Eat Now!'),
                         ],
                       ),
                     ],

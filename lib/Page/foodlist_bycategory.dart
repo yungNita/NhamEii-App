@@ -3,7 +3,8 @@ import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/cards/food_card.dart';
 import 'package:nhameii/components/homepage_component/header.dart';
 import 'package:nhameii/data/fooditem.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/food_image.dart';
 class FoodlistBycategory extends StatefulWidget {
   final String title;
 
@@ -15,6 +16,7 @@ class FoodlistBycategory extends StatefulWidget {
 
 class _FoodlistBycategoryState extends State<FoodlistBycategory> {
   late List<Map<String, String>> filteredFoodItems;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -47,7 +49,17 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: SingleChildScrollView(
+              child: StreamBuilder<QuerySnapshot>(stream: firestore.collection('foods').where('categoryId', isEqualTo: widget.title.toLowerCase().replaceAll(' ', '-')).snapshots(), builder: (context, snapshot) {
+                if ( snapshot.connectionState == ConnectionState.waiting
+                ) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty){
+                  return const Center(child: Text('no food'),); 
+                }
+                final foods = snapshot.data!.docs;
+
+              return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   vertical: 60,
                   horizontal: 20,
@@ -57,17 +69,28 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
                   spacing: 40, // Horizontal space between cards
                   runSpacing: 80, // Vertical space between rows
                   children:
-                      filteredFoodItems.map((item) {
-                        return SizedBox(
+                      foods.map((doc) {
+                        final data = doc.data()! as Map<String, dynamic>;
+
+final foodId = doc.id;
+                        final title = data['name'] as String? ?? '';
+                        final price = data['price']?.toString() ?? '';
+                        final imageUrl = foodImages[foodId] ?? '';  
+                        final detail = data['detail'];
+                        final rating = data['rating'].toString();
+                                              return SizedBox(
                           width: 130,
                           child: FoodCard(
-                            imageUrl: item['imageUrl'] ?? '',
-                            title: item['title'] ?? '',
-                            price: item['price'] ?? '',
+                            imageUrl: imageUrl,
+                            title: title,
+                            price: price,
+                            detail: detail,
+                            rating: rating,
                           ),
                         );
                       }).toList(),
                 ),
+              );}
               ),
             ),
           ],

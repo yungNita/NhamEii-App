@@ -6,12 +6,16 @@ class FoodCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final String detail;
+  final String rating;
 
   const FoodCard({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
+    required this.detail,
+    required this.rating,
   });
 
   @override
@@ -25,6 +29,8 @@ class FoodCard extends StatelessWidget {
               imageUrl: imageUrl,
               title: title,
               price: price,
+              detail: detail,
+              rating: rating,
             ),
           ),
         );
@@ -57,7 +63,7 @@ class FoodCard extends StatelessWidget {
           children: [
             Positioned(
               top: -70,
-              left: -8,
+              left: -5,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: SizedBox(

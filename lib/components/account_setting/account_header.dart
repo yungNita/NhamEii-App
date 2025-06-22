@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../backbutton.dart';
-
-
 class AccountHeader extends StatelessWidget {
   final String name;
   final String? email;
@@ -20,7 +17,17 @@ class AccountHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            const BackButtonWidget(),
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Color(0xFF3E0061),
+                size: 24,
+              ),
+              onPressed: () {
+                // Push home and replace this screen
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+            ),
             const Text(
               'My Account',
               style: TextStyle(
@@ -56,7 +63,6 @@ class AccountHeader extends StatelessWidget {
                   email ?? 'Email Address',
                   style: const TextStyle(fontSize: 16, color: Colors.black54),
                 ),
-                
               ],
             ),
           ],
