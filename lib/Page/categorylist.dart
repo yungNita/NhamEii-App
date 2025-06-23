@@ -17,39 +17,42 @@ class Categorylist extends StatefulWidget {
 
 class _CategorylistState extends State<Categorylist> {
   int selectedIndex = 0;
+  List<String> filters = [];
+  bool isLoadingFilters = true;
 
-  final List<String> filters = [
-    'All',
-    'Trending',
-    'Asian',
-    'Western',
-    'Italian',
-    'Snack',
-    'Dessert',
-    'Beverages',
-    'Street Food',
-    'Fast Food',
-    'Healthy Food',
-    'Halal',
-    'Vegetarian',
-    'Vegan',
-    'Seafood',
-    'Meat',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _fetchFilters();
+  }
+  Future<void> _fetchFilters() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('filters')
+          .get();
 
+      final fetched = snapshot.docs.map((doc) => doc['name'] as String).toList();
+
+      setState(() {
+        filters = fetched; 
+        isLoadingFilters = false;
+      });
+    } catch (e) {
+      print('Error loading filters: $e');
+      setState(() {
+        isLoadingFilters = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final List<CategoryCard> allCards = allCategoryCards;
 
-    // Apply filter
-    final String selectedType = filters[selectedIndex];
-    final List<CategoryCard> filteredCards =
-        selectedType == 'All'
-            ? allCards
-            : allCards
-                .where((card) => card.type.contains(selectedType))
-                .toList();
+  if (isLoadingFilters || filters.isEmpty) {
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
+  }
 
     return Scaffold(
       body: Background(
@@ -75,6 +78,9 @@ class _CategorylistState extends State<Categorylist> {
               ),
             ),
             SizedBox(height: 10),
+             isLoadingFilters
+                ? const Center(child: CircularProgressIndicator())
+                :
             SizedBox(
               height: 40,
               child: ListView.separated(

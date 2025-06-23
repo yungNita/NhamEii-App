@@ -66,19 +66,18 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
                 ),
                 child: Wrap(
                   alignment: WrapAlignment.start,
-                  spacing: 40, // Horizontal space between cards
-                  runSpacing: 80, // Vertical space between rows
+                  spacing: 40,
+                  runSpacing: 80,
                   children:
                       foods.map((doc) {
                         final data = doc.data()! as Map<String, dynamic>;
-
-final foodId = doc.id;
+                        final foodId = doc.id;
                         final title = data['name'] as String? ?? '';
                         final price = data['price']?.toString() ?? '';
                         final imageUrl = foodImages[foodId] ?? '';  
                         final detail = data['detail'];
                         final rating = data['rating'].toString();
-                                              return SizedBox(
+                        return SizedBox(
                           width: 130,
                           child: FoodCard(
                             imageUrl: imageUrl,

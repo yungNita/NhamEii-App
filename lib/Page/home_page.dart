@@ -15,34 +15,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<CategoryCard> categoryCard = [
-      CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/images/category/khmer.png',
-        type: ['Asian'],
-      ),
-      CategoryCard(
-        title: 'Burger',
-        imagePath: 'assets/images/category/burger.png',
-        type: ['Western'],
-      ),
-      CategoryCard(
-        title: 'Green Salad',
-        imagePath: 'assets/images/category/salad.png',
-        type: ['Vegetarian'],
-      ),
-      CategoryCard(
-        title: 'Cake',
-        imagePath: 'assets/images/category/cake.png',
-        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
-      ),
-      CategoryCard(
-        title: 'Pastry',
-        imagePath: 'assets/images/category/pastry.png',
-        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
-      ),
-    ];
-
     final List<Widget> promoCards = [
       PromoCard(imagePath: 'assets/promo1.jpg'),
       PromoCard(imagePath: 'assets/promo1.jpg'),
