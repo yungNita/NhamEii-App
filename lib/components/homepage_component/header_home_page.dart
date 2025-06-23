@@ -36,13 +36,7 @@ class HeaderHomePage extends StatelessWidget {
           children: [
             Expanded(child: Searchbar(onChanged: (query) {})),
             const SizedBox(width: 8),
-            GradientButton(
-              imageAsset: 'assets/images/settings.png',
-              onPressed: () {
-                debugPrint('Filter button pressed');
-              },
-              width: 55,
-            ),
+            
           ],
         ),),
         const SizedBox(height: 16),
