@@ -23,9 +23,6 @@ class _GamePageState extends State<GamePage> {
     'Somlor Korko',
     'Koung',
     'Loklak',
-    // 'Burger',
-    // 'Thai',
-    // 'Taco',
   ];
   List<String> userFoods = [];
   bool useUserFoods = false;

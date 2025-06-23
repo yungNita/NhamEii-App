@@ -53,7 +53,6 @@ class AccountHeader extends StatelessWidget {
                   email ?? 'Email Address',
                   style: const TextStyle(fontSize: 16, color: Colors.black54),
                 ),
-                
               ],
             ),
           ],

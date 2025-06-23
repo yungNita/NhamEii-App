@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nhameii/components/cards/food_card.dart';
 import 'package:nhameii/components/gradient_background.dart';
+import 'package:nhameii/components/navigation_bar/nav_wrapper.dart';
 import 'package:nhameii/components/q&a/title.dart';
 import 'package:nhameii/Page/game_page.dart';
+import 'package:nhameii/data/food_image.dart';
 
 class FoodRecommend extends StatefulWidget {
   final Map<int, dynamic> selectedAnswers;
@@ -37,7 +39,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
     };
 
     try {
-      final snapshot = await FirebaseFirestore.instance.collection('food').get();
+      final snapshot = await FirebaseFirestore.instance.collection('foods').get();
 
       final foods = snapshot.docs.map((doc) {
         final data = doc.data();
@@ -75,7 +77,8 @@ class _FoodRecommendState extends State<FoodRecommend> {
         return {
           'name': data['name'],
           'price': data['price'].toString(),
-          'imageKey': data['name'].toLowerCase().replaceAll(" ", "_") + ".png",
+          'imageKey': data['foodId'] ?? '',
+          
           'score': score,
         };
       }).toList();
@@ -94,78 +97,82 @@ class _FoodRecommendState extends State<FoodRecommend> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientBackground(
-      child: SafeArea(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: PageTitle(title: 'Q&A for recommendations'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE9E9FF),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Here is our recommended food based on your answers!!',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF3A015A),
-                          decoration: TextDecoration.none,
-                          fontFamily: 'Poppins',
+    return NavWrapper(
+      currentIndex: 2,
+      child: GradientBackground(
+        child: SafeArea(
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: PageTitle(title: 'Q&A for recommendations'),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE9E9FF),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Here is our recommended food based on your answers!!',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF3A015A),
+                            decoration: TextDecoration.none,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
-                    ),
-                    Image.asset(
-                      'assets/images/peng.png',
-                      width: 80,
-                      height: 80,
-                    ),
-                  ],
+                      Image.asset(
+                        'assets/images/peng.png',
+                        width: 80,
+                        height: 80,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            if (loading)
-              const Center(child: CircularProgressIndicator())
-            else
-              Expanded(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: SizedBox(
-                        height: 380,
-                        width: 310,
-                        child: GridView.count(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 90,
-                          crossAxisSpacing: 20,
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: recommendedFoods.map((food) {
-                            return FoodCard(
-                              title: food['name'],
-                              price: '\$${food['price']}',
-                              imageUrl: 'assets/images/food/${food['imageKey']}',
-                            );
-                          }).toList(),
+              if (loading)
+                const Center(child: CircularProgressIndicator())
+              else
+                Expanded(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: SizedBox(
+                          height: 380,
+                          width: 310,
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 90,
+                            crossAxisSpacing: 20,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: recommendedFoods.map((food) {
+                              final imageUrl = foodImages[food['imageKey']] ?? 'assets/images/peng.png';
+                              return FoodCard(
+                                title: food['name'],
+                                price: '\$${food['price']}',
+                                imageUrl: imageUrl,
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    _spinButton(),
-                  ],
+                      const SizedBox(height: 20),
+                      _spinButton(),
+                    ],
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

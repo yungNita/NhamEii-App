@@ -34,19 +34,15 @@ class AppRouter {
       );
 
     
-      if (foodItem != null) {
-        return MaterialPageRoute(
-          builder: (_) => FoodDetail(
-            imageUrl: foodItem.imageUrl,
-            title: foodItem.name,
-            price: foodItem.price,
-            
-          ),
-        );
-      } else {
-        return _errorRoute('Food not found ');
-      }
-    }
+      return MaterialPageRoute(
+        builder: (_) => FoodDetail(
+          imageUrl: foodItem.imageUrl,
+          title: foodItem.name,
+          price: foodItem.price,
+          
+        ),
+      );
+        }
 
     //  STEP 3: Continue with normal routes
     switch (settings.name) {
