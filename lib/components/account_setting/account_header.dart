@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../backbutton.dart';
-
 
 class AccountHeader extends StatelessWidget {
   final String name;
@@ -20,7 +18,6 @@ class AccountHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            const BackButtonWidget(),
             const Text(
               'My Account',
               style: TextStyle(

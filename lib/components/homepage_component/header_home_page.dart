@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/Page/game_page.dart';
 import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/components/button.dart';
 import 'package:nhameii/components/homepage_component/promotion.dart';
@@ -68,7 +69,7 @@ class HeaderHomePage extends StatelessWidget {
           imageAsset: 'assets/images/wheel.png',
           image: 'assets/images/peng.png',
           onPressed: () {
-            print('Option 1 clicked');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GamePage()));
           },
         ),
         const SizedBox(height: 20),

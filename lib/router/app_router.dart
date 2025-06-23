@@ -1,7 +1,6 @@
 import 'package:nhameii/Page/game_page.dart' ;
 import 'package:nhameii/Page/history_page.dart';
 import 'package:nhameii/Page/home_page.dart';
-import 'package:nhameii/Page/q&a_page.dart';
 import 'package:flutter/material.dart';
 import 'package:nhameii/Page/account_section/about_us.dart';
 import 'package:nhameii/Page/account_section/account_not_log_in.dart';
@@ -14,6 +13,7 @@ import 'package:nhameii/Page/account_section/notification_page.dart';
 import 'package:nhameii/Page/account_section/sign-up.dart';
 import 'package:nhameii/Page/account_section/termsnpolicies.dart';
 import 'package:nhameii/Page/account_section/wishlist_page.dart';
+import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/Page/splashscreen.dart';
 
 
@@ -27,7 +27,7 @@ class AppRouter {
       case '/game':
         return _fadeRoute(const GamePage());
       case '/qa':
-        return _fadeRoute(const QAPage());
+        return _fadeRoute(const QnAFlowPage());
       case '/history':
         return _fadeRoute(const HistoryPage());
       case '/account':

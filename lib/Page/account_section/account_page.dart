@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:nhameii/Components/gradient_background.dart';
 import 'package:nhameii/components/account_setting/account_button.dart';
 import 'package:nhameii/components/account_setting/account_header.dart';
 import 'package:nhameii/components/account_setting/account_menu_container.dart';
@@ -92,10 +91,26 @@ class _MyAccountPageState extends State<MyAccountPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    return NavWrapper(
-      currentIndex: 4,
+Widget build(BuildContext context) {
+  final user = FirebaseAuth.instance.currentUser;
+
+  // If user is not logged in, navigate to the not-logged-in page
+  if (user == null) {
+    // Use Future.microtask to navigate after build completes
+    Future.microtask(() {
+      Navigator.pushReplacementNamed(context, '/account-not-log-in');
+    });
+
+    // Return an empty widget temporarily while routing
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  // If user is logged in, show the normal account UI
+  return NavWrapper(
+    currentIndex: 4,
     child: GradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -104,72 +119,80 @@ class _MyAccountPageState extends State<MyAccountPage> {
             padding: const EdgeInsets.only(top: 36, right: 22, left: 22),
             child: SingleChildScrollView(
               child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AccountHeader(name: user?.displayName ?? 'Kasibook', email: user?.email ?? 'Kasibook@gmail.com' ),
-                const SizedBox(height: 18),
-                AccountMenuContainer(
-                  children: [
-                    _buildMenuItem(
-                      context,
-                      Icons.person_outline,
-                      'Edit Profile',
-                      '/edit_profile',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.history,
-                      'History',
-                      '/history',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.favorite_border,
-                      'Wishlist',
-                      '/wishlist',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.notifications_none,
-                      'Notifications',
-                      '/notification',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.support_outlined,
-                      'FAQ',
-                      '/faq',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.sticky_note_2_sharp,
-                      'Term and Policy',
-                      '/term-and-polocies',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.phone,
-                      'Contact Us',
-                      '/contact-us',
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: AccountButton(text: 'Log out', onPressed: () {_showLogoutDialog(context);  },),
-                      
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 100),
-              ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AccountHeader(
+                    name: user.displayName ?? 'Kasibook',
+                    email: user.email ?? 'Kasibook@gmail.com',
+                  ),
+                  const SizedBox(height: 18),
+                  AccountMenuContainer(
+                    children: [
+                      _buildMenuItem(
+                        context,
+                        Icons.person_outline,
+                        'Edit Profile',
+                        '/edit_profile',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.history,
+                        'History',
+                        '/history',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.favorite_border,
+                        'Wishlist',
+                        '/wishlist',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.notifications_none,
+                        'Notifications',
+                        '/notification',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.support_outlined,
+                        'FAQ',
+                        '/faq',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.sticky_note_2_sharp,
+                        'Term and Policy',
+                        '/term-and-polocies',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.phone,
+                        'Contact Us',
+                        '/contact-us',
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: AccountButton(
+                          text: 'Log out',
+                          onPressed: () {
+                            _showLogoutDialog(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 100),
+                ],
+              ),
             ),
-            )
           ),
         ),
       ),
     ),
-    );
-  }
+  );
+}
+
 
   Widget _buildMenuItem(
     BuildContext context,

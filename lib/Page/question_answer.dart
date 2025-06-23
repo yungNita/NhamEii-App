@@ -1,8 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:nhameii/Page/account_section/food_recommend.dart';
 import 'package:nhameii/components/gradient_background.dart';
 import 'package:nhameii/components/q&a/title.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QAData {
   final String question;
@@ -110,53 +112,52 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
   ];
 
   void toggleAnswer(int index, String answer) {
-  final isMulti = questions[index].isMultiple;
-  final questionText = questions[index].question;
+    final isMulti = questions[index].isMultiple;
+    final questionText = questions[index].question;
 
-  setState(() {
-    if (isMulti) {
-      final current = (selectedAnswers[index] as List<String>? ?? []);
+    setState(() {
+      if (isMulti) {
+        final current = (selectedAnswers[index] as List<String>? ?? []);
 
-      // Special logic for "Do you have any dietary preferences or restrictions?"
-      if (questionText == "Do you have any dietary preferences or restrictions?") {
-        const everythingOption = "I eat everything";
+        // Special logic for "Do you have any dietary preferences or restrictions?"
+        if (questionText ==
+            "Do you have any dietary preferences or restrictions?") {
+          const everythingOption = "I eat everything";
 
-        if (answer == everythingOption) {
-          // If selecting "I eat everything", clear others and select only it
-          selectedAnswers[index] = [everythingOption];
-          return;
+          if (answer == everythingOption) {
+            // If selecting "I eat everything", clear others and select only it
+            selectedAnswers[index] = [everythingOption];
+            return;
+          }
+
+          // If "I eat everything" is already selected and another is tapped, remove it
+          if (current.contains(everythingOption)) {
+            current.remove(everythingOption);
+          }
+
+          // Enforce max 7
+          if (current.contains(answer)) {
+            current.remove(answer);
+          } else if (current.length < 7) {
+            current.add(answer);
+          }
+
+          selectedAnswers[index] = current;
         }
-
-        // If "I eat everything" is already selected and another is tapped, remove it
-        if (current.contains(everythingOption)) {
-          current.remove(everythingOption);
+        // Other multiple choice logic (with max 4)
+        else {
+          if (current.contains(answer)) {
+            current.remove(answer);
+          } else if (current.length < 4) {
+            current.add(answer);
+          }
+          selectedAnswers[index] = current;
         }
-
-        // Enforce max 7
-        if (current.contains(answer)) {
-          current.remove(answer);
-        } else if (current.length < 7) {
-          current.add(answer);
-        }
-
-        selectedAnswers[index] = current;
+      } else {
+        selectedAnswers[index] = answer;
       }
-
-      // Other multiple choice logic (with max 4)
-      else {
-        if (current.contains(answer)) {
-          current.remove(answer);
-        } else if (current.length < 4) {
-          current.add(answer);
-        }
-        selectedAnswers[index] = current;
-      }
-    } else {
-      selectedAnswers[index] = answer;
-    }
-  });
-}
-
+    });
+  }
 
   bool hasSelection(int index) {
     final answer = selectedAnswers[index];
@@ -242,8 +243,12 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Text(
                               q.isMultiple
-                                  ? (q.question.contains("What flavors do you enjoy the most") ||
-                                          q.question.contains("What type of food are you craving"))
+                                  ? (q.question.contains(
+                                            "What flavors do you enjoy the most",
+                                          ) ||
+                                          q.question.contains(
+                                            "What type of food are you craving",
+                                          ))
                                       ? "Multiple answers allowed (Choose up to 4)"
                                       : "Multiple answers allowed"
                                   : "Single answer",
@@ -265,50 +270,55 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
                             childAspectRatio: 4,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            children: q.answers.map((a) {
-                              final isSelected = q.isMultiple
-                                  ? ((selected as List<String>? ?? []).contains(a))
-                                  : selected == a;
-                              return GestureDetector(
-                                onTap: () => toggleAnswer(index, a),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    gradient: isSelected
-                                        ? const LinearGradient(
-                                            colors: [
-                                              Color(0xFFFD4EB1),
-                                              Color(0xFFD8007A),
-                                            ],
-                                          )
-                                        : null,
-                                    border: Border.all(
-                                      color: const Color(0xFFFD4EB1),
-                                      width: 1.5,
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      a,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: isSelected
-                                            ? Colors.white
-                                            : const Color(0xFF3A015A),
-                                        fontWeight: FontWeight.w600,
-                                        decoration: TextDecoration.none,
-                                        fontFamily: 'Poppins',
+                            children:
+                                q.answers.map((a) {
+                                  final isSelected =
+                                      q.isMultiple
+                                          ? ((selected as List<String>? ?? [])
+                                              .contains(a))
+                                          : selected == a;
+                                  return GestureDetector(
+                                    onTap: () => toggleAnswer(index, a),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        gradient:
+                                            isSelected
+                                                ? const LinearGradient(
+                                                  colors: [
+                                                    Color(0xFFFD4EB1),
+                                                    Color(0xFFD8007A),
+                                                  ],
+                                                )
+                                                : null,
+                                        border: Border.all(
+                                          color: const Color(0xFFFD4EB1),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 15,
+                                        vertical: 10,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          a,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color:
+                                                isSelected
+                                                    ? Colors.white
+                                                    : const Color(0xFF3A015A),
+                                            fontWeight: FontWeight.w600,
+                                            decoration: TextDecoration.none,
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                                  );
+                                }).toList(),
                           ),
 
                           const SizedBox(height: 40),
@@ -321,7 +331,9 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
                                 TextButton(
                                   onPressed: () {
                                     _controller.previousPage(
-                                      duration: const Duration(milliseconds: 300),
+                                      duration: const Duration(
+                                        milliseconds: 300,
+                                      ),
                                       curve: Curves.easeInOut,
                                     );
                                     setState(() => currentIndex--);
@@ -339,33 +351,52 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
                                 alignment: Alignment.centerRight,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    gradient: canProceed
-                                        ? const LinearGradient(
-                                            colors: [
-                                              Color(0xFFFD4EB1),
-                                              Color(0xFFD8007A),
-                                            ],
-                                          )
-                                        : null,
+                                    gradient:
+                                        canProceed
+                                            ? const LinearGradient(
+                                              colors: [
+                                                Color(0xFFFD4EB1),
+                                                Color(0xFFD8007A),
+                                              ],
+                                            )
+                                            : null,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: TextButton(
-                                    onPressed: canProceed
-                                        ? () {
-                                            if (isLast) {
-                                              debugPrint(selectedAnswers.toString());
-                                            } else {
-                                              _controller.nextPage(
-                                                duration: const Duration(milliseconds: 300),
-                                                curve: Curves.easeInOut,
-                                              );
-                                              setState(() => currentIndex++);
+                                    onPressed:
+                                        canProceed
+                                            ? () async {
+                                              if (isLast) {
+                                                // debugPrint(
+                                                //   selectedAnswers.toString(),
+                                                // );
+                                                final userAnswers = selectedAnswers.map((key, value){
+                                                  return MapEntry('$Key', value is List ? value : [value]);
+                                                });
+
+                                                await FirebaseFirestore.instance.collection('userAnswers').add({
+                                                  'timestamp' : FieldValue.serverTimestamp(),
+                                                  'answers': userAnswers,
+                                                });
+                                                // Navigate to FoodRecommend page
+                                                
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => FoodRecommend(selectedAnswers: selectedAnswers),));
+                                              } else {
+                                                _controller.nextPage(
+                                                  duration: const Duration(
+                                                    milliseconds: 300,
+                                                  ),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                                setState(() => currentIndex++);
+                                              }
                                             }
-                                          }
-                                        : null,
+                                            : null,
                                     style: TextButton.styleFrom(
-                                      padding:
-                                          const EdgeInsets.only(right: 25, left: 25),
+                                      padding: const EdgeInsets.only(
+                                        right: 25,
+                                        left: 25,
+                                      ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
@@ -373,9 +404,10 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
                                     child: Text(
                                       isLast ? "Finish" : "Next",
                                       style: TextStyle(
-                                        color: canProceed
-                                            ? Colors.white
-                                            : const Color(0xFF3A015A),
+                                        color:
+                                            canProceed
+                                                ? Colors.white
+                                                : const Color(0xFF3A015A),
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
