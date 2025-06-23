@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:nhameii/Page/account_section/food_recommend.dart';
 import 'package:nhameii/components/gradient_background.dart';
+import 'package:nhameii/components/navigation_bar/nav_wrapper.dart';
 import 'package:nhameii/components/q&a/title.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -170,13 +171,16 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientBackground(
+    return NavWrapper(
+    currentIndex: 2,
+    child: GradientBackground(
       child: SafeArea(
         child: Column(
           children: [
+            PageTitle(title: 'Q&A for recommendations'),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: PageTitle(title: 'Q&A for recommendations'),
+              
             ),
             Expanded(
               child: PageView.builder(
@@ -427,6 +431,7 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
           ],
         ),
       ),
+    )
     );
   }
 }

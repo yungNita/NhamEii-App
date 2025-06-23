@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/gradient_background.dart';
 import '../components/navigation_bar/nav_wrapper.dart';
 import '../components/cards/history_card.dart';
@@ -20,18 +19,14 @@ class HistoryPage extends StatelessWidget {
               children: [
                 // Top bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
+                  padding: const EdgeInsets.only(top: 36, right: 22, left: 13, bottom: 10),
                   child: Row(
                     children: [
-                     const BackButtonWidget(),
                       const SizedBox(width: 10),
                       const Text(
                         'History Log',
                         style: TextStyle(
-                          fontSize: 19,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF44005E),
                         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nhameii/model/wishlist.dart';
 import '../../Page/food_detail.dart';
 
 class FoodCard extends StatefulWidget {
@@ -20,23 +19,6 @@ class FoodCard extends StatefulWidget {
 
 class _FoodCardState extends State<FoodCard> {
   bool isWishlisted = false;
-
-  void toggleWishlist() {
-    setState(() {
-      isWishlisted = !isWishlisted;
-      if (isWishlisted) {
-        Wishlist.items.add(WishlistItem(
-          imageUrl: widget.imageUrl,
-          title: widget.title,
-          price: widget.price,
-        ));
-        debugPrint('Added to wishlist: ${widget.title}');
-      } else {
-        Wishlist.items.removeWhere((item) => item.title == widget.title);
-        debugPrint('Removed from wishlist: ${widget.title}');
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +79,7 @@ class _FoodCardState extends State<FoodCard> {
                 top: -63,
                 right: -25,
                 child: GestureDetector(
-                  onTap: toggleWishlist,
+                  
                   child: Image.asset(
                     isWishlisted
                         ? 'assets/icons/heart_fill.png'

@@ -3,7 +3,6 @@ import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/cards/category_card.dart';
 import 'package:nhameii/components/homepage_component/filterbutton.dart';
 import 'package:nhameii/components/homepage_component/header.dart';
-import 'package:nhameii/components/navigation_bar/nav_bar.dart';
 
 import '../data/categoryitem.dart';
 
@@ -50,7 +49,8 @@ class _CategorylistState extends State<Categorylist> {
                 .where((card) => card.type.contains(selectedType))
                 .toList();
 
-    return Scaffold(
+    return 
+    Scaffold(
       body: Background(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,7 +113,8 @@ class _CategorylistState extends State<Categorylist> {
           ],
         ),
       ),
-      bottomNavigationBar: NavBar(currentIndex: 0, onTap: (index) {}),
+      
     );
+  
   }
 }

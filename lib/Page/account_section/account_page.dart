@@ -122,8 +122,8 @@ Widget build(BuildContext context) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AccountHeader(
-                    name: user.displayName ?? 'Kasibook',
-                    email: user.email ?? 'Kasibook@gmail.com',
+                    name: user.displayName ?? 'User',
+                    email: user.email ?? 'user@gmail.com',
                   ),
                   const SizedBox(height: 18),
                   AccountMenuContainer(
