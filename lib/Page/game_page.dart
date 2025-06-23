@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'package:nhameii/data/recommeded_foods.dart';
+import 'package:nhameii/models/food_items.dart';
 import '../components/navigation_bar/nav_wrapper.dart';
 import '../components/gradient_background.dart';
 
@@ -14,29 +15,151 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final StreamController<int> controller = StreamController<int>();
-  final List<String> items = [
-    'Pasta',
-    'Hot dog',
-    'Salad',
-    'Bacon',
-    'Sushi',
-    'Burrito',
-    'Pizza',
-    'Burger',
-    'Thai',
-    'Taco',
-    'Stew',
-    'Soup',
-    'Sandwich',
-    'Steak',
-    'Chinese',
-    'BBQ',
+  final StreamController<int> controller = StreamController<int>.broadcast();
+  final List<String> recommendedFoods = [
+    'Fish Amok',
+    'Bok Kapi',
+    'Grilled Fish',
+    'Somlor Korko',
+    'Koung',
+    'Loklak',
+    // 'Burger',
+    // 'Thai',
+    // 'Taco',
   ];
+  List<String> userFoods = [];
+  bool useUserFoods = false;
+
+  String? lastResult;
+  bool isResultFromRecommendation = false;
+
+  int selected = 0;
+
+  List<String> get items =>
+      useUserFoods && userFoods.isNotEmpty ? userFoods : recommendedFoods;
 
   void spinWheel() {
+    if (items.isEmpty) return;
     final index = Random().nextInt(items.length);
     controller.add(index);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        lastResult = items[index];
+        isResultFromRecommendation =
+            !useUserFoods || !userFoods.contains(lastResult);
+      });
+      showResultDialog();
+    });
+  }
+
+  void promptUserForFood() {
+    final TextEditingController textController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add a food'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: textController,
+                  decoration: const InputDecoration(hintText: 'Food name'),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                final String food = textController.text.trim();
+                if (food.isNotEmpty) {
+                  setState(() {
+                    userFoods = List.from(userFoods)..add(food);
+                    useUserFoods = true;
+                  });
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Add'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void useRecommendation() {
+    setState(() {
+      useUserFoods = false;
+    });
+    spinWheel();
+  }
+
+  FoodItem? getFoodItemByName(String name) {
+    if (name.isEmpty) return null;
+    try {
+      return recommendedFoodItems.firstWhere(
+        (item) => item.name.toLowerCase() == name.toLowerCase(),
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  void showResultDialog() {
+    final foodItem = getFoodItemByName(lastResult ?? '');
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('🎉 Your result'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'You got ${foodItem?.name ?? lastResult}!',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                if (foodItem != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Image.asset(foodItem.imageUrl, height: 120),
+                  ),
+                if (foodItem != null)
+                  Text(
+                    foodItem.price,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+              ],
+            ),
+            actions: [
+              if (isResultFromRecommendation && foodItem != null)
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(
+                      context,
+                      '/food/${foodItem.name.toLowerCase()}',
+                    );
+                  },
+                  child: const Text('View Food'),
+                ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+    );
   }
 
   @override
@@ -47,126 +170,181 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return NavWrapper(
-      currentIndex: 1,
-      child: GradientBackground(
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-             
-
-                 
-              // Game title
-              Row(
-                children: [
-                  const SizedBox(width: 16),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/home');
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Color(0xFF44005E),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: NavWrapper(
+        currentIndex: 1,
+        child: GradientBackground(
+          child: SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                // Game title
+                Row(
+                  children: [
+                    const SizedBox(width: 16),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
+                      child: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF44005E),
+                      ),
                     ),
-                  ),
-
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Game',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF44005E)),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              // ✍️ Buttons
-              Padding(
-                padding: const EdgeInsets.symmetric(
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Game',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF44005E),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                // Buttons
+                Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 16,
                   ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          // handle custom input
-                        },
-                        icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('Input your own foods'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              useUserFoods = true;
+                            });
+
+                            promptUserForFood(); // prompt after switching mode
+                          },
+                          icon: const Icon(Icons.edit, size: 18),
+                          label: const Text('Input your own foods'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                useUserFoods ? Color(0xFFD8007A) : Colors.white,
+                            foregroundColor:
+                                useUserFoods ? Colors.white : Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 4,
+                            side: BorderSide(
+                              color:
+                                  useUserFoods
+                                      ? Color(0xFFD8007A)
+                                      : Colors.grey.shade300,
+                              width: 1.5,
+                            ),
                           ),
-                          elevation: 4,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              useUserFoods = false;
+                            });
+
+                          },
+                          icon: const Icon(Icons.auto_awesome, size: 18),
+                          label: const Text('Our Recommendation'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                !useUserFoods
+                                    ? Color(0xFFD8007A)
+                                    : Colors.white,
+                            foregroundColor:
+                                !useUserFoods ? Colors.white : Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 4,
+                            side: BorderSide(
+                              color:
+                                  !useUserFoods
+                                      ? Color(0xFFD8007A)
+                                      : Colors.grey.shade300,
+                              width: 1.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 36),
+                // Smaller fortune wheel
+                SizedBox(
+                  width: 300,
+                  height: 300,
+                  child:
+                      items.length > 1
+                          ? FortuneWheel(
+                            selected: controller.stream,
+                            items: [
+                              for (var food in items)
+                                FortuneItem(child: Text(food)),
+                            ],
+                            indicators: const <FortuneIndicator>[
+                              FortuneIndicator(
+                                alignment: Alignment.topCenter,
+                                child: TriangleIndicator(color: Colors.black),
+                              ),
+                            ],
+                          )
+                          : const Center(
+                            child: Text(
+                              'Please add at least 2 foods to spin the wheel!',
+                            ),
+                          ),
+                ),
+                const SizedBox(height: 30),
+                // Spin button
+                SizedBox(
+                  width: 100, // set your desired width
+                  child: ElevatedButton(
+                    onPressed: items.length > 1 ? spinWheel : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFFFD4EB1), Color(0xFFD8007A)],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        child: const Text(
+                          "Spin",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: spinWheel,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.purple,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          elevation: 4,
-                        ),
-                        child: const Text('Our Recommendation'),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-
-              const SizedBox(height: 36),
-
-              // Fortune wheel
-              Expanded(
-                child: FortuneWheel(
-                  selected: controller.stream,
-                  items: [
-                    for (var food in items) FortuneItem(child: Text(food)),
-                  ],
-                  indicators: const <FortuneIndicator>[
-                    FortuneIndicator(
-                      alignment: Alignment.topCenter,
-                      child: TriangleIndicator(color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // pin Button
-              // ElevatedButton(
-              //   onPressed: spinWheel,
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: const Color(0xFF7F3DFF),
-              //     foregroundColor: Colors.white,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(12),
-              //     ),
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: 32,
-              //       vertical: 14,
-              //     ),
-              //   ),
-              //   child: const Text("Spin", style: TextStyle(fontSize: 16)),
-              // ),
-
-              const SizedBox(height: 30),
-            ],
+              ],
+            ),
           ),
         ),
       ),
+      bottomNavigationBar: null,
     );
   }
 }
