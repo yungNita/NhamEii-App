@@ -1,111 +1,132 @@
 import 'package:flutter/material.dart';
+import '../../Page/food_detail.dart';
 
 class HistoryCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String subtitle;
-  final String date;
+  final String price;
+  final String? rating;
+  final String? userId; // Added userId for future use
+  final VoidCallback? onTap;
 
   const HistoryCard({
     super.key,
     required this.imagePath,
     required this.title,
     required this.subtitle,
-    required this.date,
+    required this.price,
+    this.rating,
+    this.userId,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    const double cardHeight = 100;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Main Card
-          Container(
-            height: cardHeight,
-            margin: const EdgeInsets.only(left: 50),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: const LinearGradient(
-                colors: [Color(0xFFF5E8FF), Color(0xFFEDE4FB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
-                  offset: Offset(0, 4),
-                )
-              ],
+    return GestureDetector(
+      onTap: onTap, // Navigate to FoodDetail
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFFFFFFF), Color(0xFFEDEDF9), Color(0xFFF4E3F2)],
             ),
-            child: Row(
-              children: [
-                const SizedBox(width: 60), //  creates space for the image
-                // Info section
-                Expanded(
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0xFFEAD3EA),
+                offset: Offset(0, 2),
+                blurRadius: 8,
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              // Food Image
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    imagePath,
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+
+              // Title, Subtitle, Price, Rating
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12.0,
+                    horizontal: 8,
+                  ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12)),
-                      Text(subtitle,
-                          style: TextStyle(color: Colors.grey[600], fontSize: 10)),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color(0xFF44005E),
+                        ),
+                      ),
                       const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Icon(Icons.calendar_today,
-                              size: 14, color: Colors.grey),
-                          const SizedBox(width: 4),
-                          Text(date,
-                              style: const TextStyle(
-                                  color: Colors.grey, fontSize: 10)),
+                          Text(
+                            price,
+                            style: const TextStyle(
+                              color: Color(0xFFEB1E63),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 16,
+                              ),
+                              const SizedBox(width: 4),
+                            Text(
+                                (rating == null || rating!.isEmpty)
+                                    ? 'N/A'
+                                    : rating!,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+
+                            ],
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                //Button
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD60059),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    'Eat again',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          //  Image aligned left and stretched to card height
-          Positioned(
-            left: 0,
-            top: 0,
-            child: ClipOval(
-              child: Container(
-                width: cardHeight + 8,
-                height: cardHeight + 10 ,
-                decoration: BoxDecoration(
-                  // shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(imagePath),
-                  fit: BoxFit.cover, //this fills the circle perfectly
-                  ),
-                ),
               ),
-            ),
+              // Date label removed
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
