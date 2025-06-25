@@ -108,62 +108,62 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     // Debug current user state
     debugPrint('User provider data: ${user.providerData.map((p) => p.providerId)}');
-    debugPrint('Email verified: ${user.emailVerified}');
+    // debugPrint('Email verified: ${user.emailVerified}');
 
     // 3. Verify current email is verified
-    if (!user.emailVerified) {
-      await user.sendEmailVerification();
-      throw Exception('Please verify your current email before making changes. Verification email sent.');
-    }
+    // if (!user.emailVerified) {
+    //   await user.sendEmailVerification();
+    //   throw Exception('Please verify your current email before making changes. Verification email sent.');
+    // }
 
     // 4. Handle Email Change
-    if (_emailChanged) {
-      if (passwordController.text.isEmpty) {
-        throw Exception('Current password is required to change email');
-      }
+    // if (_emailChanged) {
+    //   if (passwordController.text.isEmpty) {
+    //     throw Exception('Current password is required to change email');
+    //   }
 
-      // Reauthenticate user
-      try {
-        final credential = EmailAuthProvider.credential(
-          email: user.email!,
-          password: passwordController.text,
-        );
-        await user.reauthenticateWithCredential(credential);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'wrong-password') {
-          throw Exception('Incorrect current password');
-        }
-        throw Exception('Reauthentication failed: ${e.message}');
-      }
+    //   // Reauthenticate user
+    //   try {
+    //     final credential = EmailAuthProvider.credential(
+    //       email: user.email!,
+    //       password: passwordController.text,
+    //     );
+    //     await user.reauthenticateWithCredential(credential);
+    //   } on FirebaseAuthException catch (e) {
+    //     if (e.code == 'wrong-password') {
+    //       throw Exception('Incorrect current password');
+    //     }
+    //     throw Exception('Reauthentication failed: ${e.message}');
+    //   }
 
-      // Update email
-      try {
-        await user.updateEmail(emailController.text);
-        await user.sendEmailVerification();
+    //   // Update email
+    //   try {
+    //     await user.updateEmail(emailController.text);
+    //     await user.sendEmailVerification();
         
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Verification email sent to your new address. Please verify it.'),
-              duration: Duration(seconds: 5),
-            ),
-          );
-        }
-      } on FirebaseAuthException catch (e) {
-        switch (e.code) {
-          case 'requires-recent-login':
-            throw Exception('This operation requires recent authentication. Please log out and back in.');
-          case 'email-already-in-use':
-            throw Exception('This email is already registered with another account');
-          case 'invalid-email':
-            throw Exception('Please enter a valid email address');
-          case 'operation-not-allowed':
-            throw Exception('Email/password accounts are not enabled. Check Firebase Auth settings.');
-          default:
-            throw Exception('Email update failed: ${e.message}');
-        }
-      }
-    }
+    //     if (mounted) {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(
+    //           content: Text('Verification email sent to your new address. Please verify it.'),
+    //           duration: Duration(seconds: 5),
+    //         ),
+    //       );
+    //     }
+    //   } on FirebaseAuthException catch (e) {
+    //     switch (e.code) {
+    //       case 'requires-recent-login':
+    //         throw Exception('This operation requires recent authentication. Please log out and back in.');
+    //       case 'email-already-in-use':
+    //         throw Exception('This email is already registered with another account');
+    //       case 'invalid-email':
+    //         throw Exception('Please enter a valid email address');
+    //       case 'operation-not-allowed':
+    //         throw Exception('Email/password accounts are not enabled. Check Firebase Auth settings.');
+    //       default:
+    //         throw Exception('Email update failed: ${e.message}');
+    //     }
+    //   }
+    // }
 
     // 5. Handle Password Change
     if (_showPasswordFields && newPasswordController.text.isNotEmpty) {
@@ -370,37 +370,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             
                             // Always show password field when email is changed
-                            if (_emailChanged) ...[
-                              const SizedBox(height: 16),
+                            // if (_emailChanged) ...[
+                              const SizedBox(height: 9),
                               Text(
-                                "Current Password (required for email change)",
-                                style: textTheme.titleMedium?.copyWith(
+                                "Email cannot be changed",
+                                style: textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w700,
-                                  color: Colors.redAccent,
+                                  color: const Color.fromARGB(255, 255, 36, 36),
                                 ),
                               ),
-                              const SizedBox(height: 4),
-                              TextFormField(
-                                controller: passwordController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter your current password',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (_emailChanged && 
-                                      (value == null || value.isEmpty)) {
-                                    return 'Current password required for email change';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ],
+                              
+                            // ],
                             
                            
-                            if (!_emailChanged) ...[
+                            // if (!_emailChanged) ...[
                               const SizedBox(height: 20),
                                 Text(
                                   "Current Password",
@@ -454,7 +437,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   },
                                 ),
                               // ],
-                            ],
+                            // ],
                             const SizedBox(height: 24),
                             Row(
                               children: [

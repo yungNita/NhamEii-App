@@ -1,4 +1,3 @@
-// services/firebase_user_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -26,13 +25,6 @@ class FirebaseUserService {
 
       if (name != null) updateData['username'] = name;
       if (email != null) updateData['email'] = email;
-
-      // Upload image if provided
-      // if (imageFile != null) {
-        // You'll need to implement Firebase Storage upload here
-        // final imageUrl = await _uploadProfileImage(userId, imageFile);
-        // updateData['photoURL'] = imageUrl;
-      // }
 
       if (updateData.isNotEmpty) {
         await userRef.update(updateData);
