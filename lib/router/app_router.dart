@@ -79,7 +79,7 @@ class AppRouter {
       case '/sign-up':
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
       default:
-        return _errorRoute('Page Not Found 🕳️');
+        return _errorRoute('Page Not Found ');
     }
   }
 

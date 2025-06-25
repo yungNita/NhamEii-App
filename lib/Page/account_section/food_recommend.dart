@@ -19,6 +19,7 @@ class FoodRecommend extends StatefulWidget {
 class _FoodRecommendState extends State<FoodRecommend> {
   List<Map<String, dynamic>> recommendedFoods = [];
   bool loading = true;
+  
 
   @override
   void initState() {
@@ -147,7 +148,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
                     const Center(child: CircularProgressIndicator())
                   else ...[
                     Padding(
-                      padding: const EdgeInsets.only(top: 70, left: 45 ),
+                      padding: const EdgeInsets.only(top: 70, left: 45),
                       child: SizedBox(
                         height: 430,
                         width: 310,
@@ -209,9 +210,14 @@ class _FoodRecommendState extends State<FoodRecommend> {
           ),
         ),
         onPressed: () {
+          final foodNames =
+              recommendedFoods.map((f) => f['name'] as String).toList();
+
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => GamePage()),
+            MaterialPageRoute(
+              builder: (context) => GamePage(foodsFromQuiz: foodNames),
+            ),
           );
         },
         child: const Text(
