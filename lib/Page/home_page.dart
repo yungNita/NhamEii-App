@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                         stream:
                             FirebaseFirestore.instance
                                 .collection('foods')
-                                .where('categoryId', isEqualTo:  'thai-food')
+                                .where('categoryId', isEqualTo:  'khmer-food')
                                 .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {

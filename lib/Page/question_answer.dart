@@ -376,11 +376,6 @@ class _QnAFlowPageState extends State<QnAFlowPage> {
                                                   return MapEntry(q.question, value is List ? value : [value]);
                                                 });
 
-
-                                                // final userAnswers = selectedAnswers.map((key, value){
-                                                //   return MapEntry('$Key', value is List ? value : [value]);
-                                                // });
-
                                                 await FirebaseFirestore.instance.collection('userAnswers').add({
                                                   'timestamp' : FieldValue.serverTimestamp(),
                                                   'answers': formatedAnswers,
