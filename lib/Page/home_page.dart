@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/Page/account_section/wishlist_page.dart';
 import 'package:nhameii/Page/categorylist.dart';
 import 'package:nhameii/components/cards/category_card.dart';
 import 'package:nhameii/components/homepage_component/header_home_page.dart';
@@ -11,51 +12,80 @@ import '../data/food_image.dart';
 import '../data/category_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<CategoryCard> categoryCard = [
-      CategoryCard(
-        title: 'Khmer Food',
-        imagePath: 'assets/images/category/khmer.png',
-        type: ['Asian'],
-      ),
-      CategoryCard(
-        title: 'Burger',
-        imagePath: 'assets/images/category/burger.png',
-        type: ['Western'],
-      ),
-      CategoryCard(
-        title: 'Green Salad',
-        imagePath: 'assets/images/category/salad.png',
-        type: ['Vegetarian'],
-      ),
-      CategoryCard(
-        title: 'Cake',
-        imagePath: 'assets/images/category/cake.png',
-        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
-      ),
-      CategoryCard(
-        title: 'Pastry',
-        imagePath: 'assets/images/category/pastry.png',
-        type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
-      ),
-    ];
+  State<HomePage> createState() => _HomePageState();
+}
 
-    final List<Widget> promoCards = [
-      PromoCard(imagePath: 'assets/promo1.jpg'),
-      PromoCard(imagePath: 'assets/promo1.jpg'),
-      PromoCard(imagePath: 'assets/promo1.jpg'),
-      PromoCard(imagePath: 'assets/promo1.jpg'),
-      PromoCard(imagePath: 'assets/promo1.jpg'),
-    ];
+class _HomePageState extends State<HomePage> {
+  final List<CategoryCard> categoryCard = [
+    CategoryCard(
+      title: 'Khmer Food',
+      imagePath: 'assets/images/category/khmer.png',
+      type: ['Asian'],
+    ),
+    CategoryCard(
+      title: 'Burger',
+      imagePath: 'assets/images/category/burger.png',
+      type: ['Western'],
+    ),
+    CategoryCard(
+      title: 'Green Salad',
+      imagePath: 'assets/images/category/salad.png',
+      type: ['Vegetarian'],
+    ),
+    CategoryCard(
+      title: 'Cake',
+      imagePath: 'assets/images/category/cake.png',
+      type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
+    ),
+    CategoryCard(
+      title: 'Pastry',
+      imagePath: 'assets/images/category/pastry.png',
+      type: ['Snack', 'Dessert', 'Vegetarian', 'Halal', 'Trending'],
+    ),
+  ];
+
+  List<Map<String, dynamic>> wishlistItems = [];
+
+  void toggleWishlist(Map<String, dynamic> item) {
+    setState(() {
+      if (wishlistItems.any((element) => element['id'] == item['id'])) {
+        wishlistItems.removeWhere((element) => element['id'] == item['id']);
+      } else {
+        wishlistItems.add(item);
+      }
+    });
+  }
+
+  final List<Widget> promoCards = [
+    PromoCard(imagePath: 'assets/promo1.jpg'),
+    PromoCard(imagePath: 'assets/promo1.jpg'),
+    PromoCard(imagePath: 'assets/promo1.jpg'),
+    PromoCard(imagePath: 'assets/promo1.jpg'),
+    PromoCard(imagePath: 'assets/promo1.jpg'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     return NavWrapper(
       currentIndex: 0, //current index for HomePage
       child: GradientBackground(
         child: Scaffold(
           backgroundColor: Colors.transparent,
+           floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WishlistPage(wishlistItems: wishlistItems),
+                ),
+              );
+            },
+            child: const Icon(Icons.favorite),
+          ),
           body: Stack(
             children: [
               // Main scrollable content
@@ -108,6 +138,10 @@ class HomePage extends StatelessWidget {
                                     final imageUrl = foodImages[foodId] ?? '';
                                     final rating = data['rating'].toString();
                                     final detail = data['detail'];
+
+                                    final isWishlisted = wishlistItems
+                                    .any((item) => item['id'] == foodId);
+                                    
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 12.0,
@@ -118,6 +152,7 @@ class HomePage extends StatelessWidget {
                                         price: '\$$price',
                                         detail: detail,
                                         rating: rating,
+                                        isInitiallyWishlisted: isWishlisted, id: '',
                                       ),
                                     );
                                   }).toList(),

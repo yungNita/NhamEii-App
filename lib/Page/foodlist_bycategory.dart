@@ -85,7 +85,7 @@ final foodId = doc.id;
                             title: title,
                             price: price,
                             detail: detail,
-                            rating: rating,
+                            rating: rating, id: '',
                           ),
                         );
                       }).toList(),

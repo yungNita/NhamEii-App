@@ -10,10 +10,6 @@ const Map<String, String> foodImages = {
   'lot-cha': 'assets/images/food/khmer/lotcha.png',
   'num-banhchok': 'assets/images/food/khmer/nombanhchok.png',
   
-  'kimchi-fried-rice': 'assets/images/food/khmer/koung.png',
-  'mango-sticky-rice': 'assets/images/food/khmer/loklak.png',
-  'thai-papaya-salad': 'assets/images/food/khmer/lotcha.png',
-  'vegetable-ramen': 'assets/images/food/khmer/nombanhchok.png',
   
 
 };

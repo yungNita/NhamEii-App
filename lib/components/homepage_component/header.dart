@@ -28,7 +28,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => WishlistPage(),
+                builder: (context) => WishlistPage(wishlistItems: []),
               ), 
             );
           },

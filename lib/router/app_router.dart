@@ -1,5 +1,5 @@
 import 'package:nhameii/Page/food_detail.dart';
-import 'package:nhameii/Page/game_page.dart' ;
+import 'package:nhameii/Page/game_page.dart';
 import 'package:nhameii/Page/history_page.dart';
 import 'package:nhameii/Page/home_page.dart';
 import 'package:flutter/material.dart';
@@ -17,34 +17,62 @@ import 'package:nhameii/Page/account_section/wishlist_page.dart';
 import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/Page/splashscreen.dart';
 import 'package:nhameii/data/recommeded_foods.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class AppRouter {
+  static File? _profileImage; // Local storage for profile image
+
+  static Future<void> _loadProfileImage() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = '${directory.path}/profile_image.jpg';
+      final imageFile = File(imagePath);
+      
+      if (await imageFile.exists()) {
+        _profileImage = imageFile;
+      }
+    } catch (e) {
+      debugPrint('Error loading profile image: $e');
+    }
+  }
+
+  static Future<void> _updateProfileImage(File? newImage) async {
+    try {
+      if (newImage != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = '${directory.path}/profile_image.jpg';
+        await newImage.copy(imagePath);
+        _profileImage = File(imagePath);
+      } else {
+        _profileImage = null;
+      }
+    } catch (e) {
+      debugPrint('Error updating profile image: $e');
+    }
+  }
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final uri = Uri.parse(settings.name ?? '');
 
-  
     if (uri.pathSegments.length == 2 && uri.pathSegments[0] == 'food') {
       final foodName = uri.pathSegments[1];
-
-
       final foodItem = recommendedFoodItems.firstWhere(
         (item) => item.name.toLowerCase() == foodName.toLowerCase(),
         orElse: () => throw Exception('Food not found'),
       );
 
-    
       return MaterialPageRoute(
         builder: (_) => FoodDetail(
           imageUrl: foodItem.imageUrl,
           title: foodItem.name,
           price: foodItem.price,
-          
         ),
       );
-        }
+    }
 
-    //  STEP 3: Continue with normal routes
     switch (settings.name) {
       case '/':
         return _fadeRoute(const SplashScreen());
@@ -59,9 +87,29 @@ class AppRouter {
       case '/account':
         return _fadeRoute(const MyAccountPage());
       case '/edit_profile':
-        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          return _fadeRoute(const LoginScreen());
+        }
+        
+        // Load profile image if not already loaded
+        if (_profileImage == null) {
+          _loadProfileImage();
+        }
+
+        return MaterialPageRoute(
+          builder: (_) => EditProfileScreen(
+            userId: user.uid,
+            currentName: user.displayName ?? 'User',
+            currentEmail: user.email ?? '',
+            profileImage: _profileImage,
+            onImageChanged: (newImage) async {
+              await _updateProfileImage(newImage);
+            },
+          ),
+        );
       case '/wishlist':
-        return MaterialPageRoute(builder: (_) => const WishlistPage());
+        return MaterialPageRoute(builder: (_) => WishlistPage(wishlistItems: const []));
       case '/notification':
         return MaterialPageRoute(builder: (_) => const NotificationPage());
       case '/about-us':
