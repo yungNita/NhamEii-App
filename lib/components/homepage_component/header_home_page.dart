@@ -4,6 +4,7 @@ import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/components/button.dart';
 import 'package:nhameii/components/homepage_component/promotion.dart';
 import 'package:nhameii/components/options.dart';
+import 'package:nhameii/components/search.dart';
 
 import 'header.dart';
 import 'searchbar.dart';
@@ -32,9 +33,13 @@ class HeaderHomePage extends StatelessWidget {
           style: TextStyle(fontSize: 22, fontFamily: 'Kh BL LazySmooth'),
         ),
         const SizedBox(height: 16),
-        Padding(padding: EdgeInsets.only(right:16), child: Row(
+        Padding(
+          padding: EdgeInsets.only(right:16), 
+          child: Row(
           children: [
-            Expanded(child: Searchbar(onChanged: (query) {})),
+            SizedBox(
+              height: 48, width: 250, child: Search()
+            ),
             const SizedBox(width: 8),
             
           ],

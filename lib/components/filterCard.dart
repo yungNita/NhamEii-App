@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/components/button.dart';
 
 // build a widget to take a name and an array of options
 // options are displayed to be selected
@@ -12,7 +13,7 @@ class FilterCard extends StatefulWidget {
     super.key,
     required this.name,
     required this.options,
-    required this.onSelected
+    required this.onSelected,
     });
 
   @override
@@ -33,14 +34,6 @@ class _FilterCardState extends State<FilterCard> {
           width: 1.0,
           style: BorderStyle.solid,
         ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Color.fromARGB(255, 218, 218, 218), // shadow color
-        //     spreadRadius: 2,  // how much the shadow spreads
-        //     blurRadius: 5,    // softness of the shadow
-        //     offset: Offset(3, 3), // x, y offset of the shadow
-        //   ),
-        // ],
       ),
       padding: EdgeInsets.all(18),
       width: 250,
@@ -53,7 +46,7 @@ class _FilterCardState extends State<FilterCard> {
               child: Text(
                 widget.name,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold
                 ),
               ),
@@ -69,6 +62,7 @@ class _FilterCardState extends State<FilterCard> {
                     return ChoiceChip(
                       label: Text(option), 
                       selected: isSelected,
+                      labelStyle: TextStyle(fontSize: 10),
                       
                       onSelected: (_) {
                         setState(() {
@@ -86,25 +80,28 @@ class _FilterCardState extends State<FilterCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // widget.onApplied(false);
+                    // print('cancel');
+                    Navigator.of(context).pop(); // closes the dialog
+                  },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(Colors.white),
                     foregroundColor: WidgetStateProperty.all(Color(0xff2C3E50)),
                     shadowColor: WidgetStateProperty.all(Colors.transparent),
                   ),
-                  child: Text("Cancel"),
+                  child: Text("Cancel", style: TextStyle(fontSize: 10),),
                   
                 ),
-                ElevatedButton(
-                  onPressed: () {}, 
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Color(0xff868BFB)),
-                    foregroundColor: WidgetStateProperty.all(Color(0xffffffff)),
-                  ),
-                  child: Text('Apply'),
-                  
-                ),
-                  
+                GradientButton(
+                  onPressed: () {
+                    // widget.onApplied(true);
+                    widget.onSelected(selected!);
+                    Navigator.of(context).pop(); // closes the dialog
+                  },
+                  text: "Apply",
+                  textStyle: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.w600),
+                ) 
               ],
             )
           ],

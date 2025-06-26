@@ -14,6 +14,8 @@ import 'package:nhameii/Page/account_section/notification_page.dart';
 import 'package:nhameii/Page/account_section/sign-up.dart';
 import 'package:nhameii/Page/account_section/termsnpolicies.dart';
 import 'package:nhameii/Page/account_section/wishlist_page.dart';
+import 'package:nhameii/Page/search_page.dart';
+import 'package:nhameii/Page/search_results_page.dart';
 import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/Page/splashscreen.dart';
 import 'package:nhameii/data/recommeded_foods.dart';
@@ -78,6 +80,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/sign-up':
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
+      case '/search':
+        return MaterialPageRoute(builder: (_) => const SearchPage());
+      case '/search-results':
+        return MaterialPageRoute(builder: (_) => const SearchResultsPage(query: '***'));
+
       default:
         return _errorRoute('Page Not Found 🕳️');
     }
