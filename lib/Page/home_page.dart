@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                                     child: FoodCard(
                                     imageUrl: imageUrl,
                                     title: title,
-                                    price: '\$$price',
+                                    price: price,
                                     detail: detail,
                                     rating: rating,
                                   ),

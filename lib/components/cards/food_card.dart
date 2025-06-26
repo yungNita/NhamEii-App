@@ -96,7 +96,7 @@ class FoodCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    price,
+                    '\$'+price,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

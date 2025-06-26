@@ -4,7 +4,7 @@ const Map<String, String> categoryImages = {
   'chinese-food': 'assets/images/category/chinese.png',
   'indian-food': 'assets/images/category/indian.png',
   'japanese-food': 'assets/images/category/japanese.png',
-  'vietnamese': 'assets/images/category/korean.png',
+  'vietnamese': 'assets/images/category/vietnamese.png',
   'thai-food': 'assets/images/category/thai.png',
   'burger': 'assets/images/category/burger.png',
   'pasta': 'assets/images/category/pasta.png',
