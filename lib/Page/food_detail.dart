@@ -134,7 +134,9 @@ class FoodDetail extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    GradientButton(onPressed: () {}, text: 'Eat Now!'),
+                    GradientButton(onPressed: () {
+                      Navigator.pushNamed(context, '/home');
+                    }, text: 'Eat Now!'),
                   ],
                 ),
               ),
