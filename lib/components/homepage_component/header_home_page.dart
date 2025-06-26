@@ -37,9 +37,7 @@ class HeaderHomePage extends StatelessWidget {
           padding: EdgeInsets.only(right:16), 
           child: Row(
           children: [
-            SizedBox(
-              height: 48, width: 250, child: Search()
-            ),
+            Search(),
             const SizedBox(width: 8),
             
           ],
