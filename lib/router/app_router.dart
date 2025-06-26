@@ -41,6 +41,8 @@ class AppRouter {
           imageUrl: foodItem.imageUrl,
           title: foodItem.name,
           price: foodItem.price,
+          detail: foodItem.description,
+          rating: foodItem.rating,
           
         ),
       );
@@ -86,7 +88,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SearchResultsPage(query: '***'));
 
       default:
-        return _errorRoute('Page Not Found 🕳️');
+        return _errorRoute('Page Not Found ');
     }
   }
 
