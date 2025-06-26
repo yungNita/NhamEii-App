@@ -41,6 +41,8 @@ class AppRouter {
           imageUrl: foodItem.imageUrl,
           title: foodItem.name,
           price: foodItem.price,
+          detail: foodItem.description,
+          rating: foodItem.rating,
           
         ),
       );
