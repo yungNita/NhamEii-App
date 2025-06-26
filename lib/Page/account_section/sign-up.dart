@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:nhameii/Components/backbutton.dart';
 import 'package:nhameii/components/account_setting/account_button.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../components/backbutton.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -19,6 +21,20 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  final _emailController = TextEditingController();
+  final _passwordCotroller = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordCotroller.dispose();
+    _confirmPasswordController.dispose();
+    _usernameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +83,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(height: 24),
 
                         // Username Field
-                        _buildInputField("Username", Icons.person),
+                        _buildInputField("Username", Icons.person, _usernameController),
 
                         // Email Field
-                        _buildInputField("Email Address", Icons.email),
+                        _buildInputField("Email Address", Icons.email, _emailController),
 
                         // Password Field
                         _buildPasswordField(
                           "Enter your password",
+                          _passwordCotroller,
                           _obscurePassword,
                           () => setState(
                             () => _obscurePassword = !_obscurePassword,
@@ -84,6 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // Confirm Password Field
                         _buildPasswordField(
                           "Confirm password",
+                          _confirmPasswordController,
                           _obscureConfirmPassword,
                           () => setState(
                             () =>
@@ -99,9 +117,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: double.infinity,
                           child: AccountButton(
                             text: 'Sign up',
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/');
-                            },
+                            onPressed: () async {
+                              final email = _emailController.text.trim();
+                              final password = _passwordCotroller.text.trim();
+                              final confirmPassword = _confirmPasswordController.text.trim();
+                              final username = _usernameController.text.trim();
+
+                              if (password != confirmPassword) {
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password do not match'),));
+                                return;
+                              }
+                              try {
+                                UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+
+                                await userCredential.user?.updateDisplayName(username);
+                                await userCredential.user?.reload();
+
+                                if (userCredential.user == null) {
+                                  print("User is null after sign up");
+                                  return;
+                                }
+                                await saveUserProfile(userCredential.user!, username);
+
+                                Navigator.pushNamed(context, '/');
+                              } on FirebaseAuthException catch (e) {
+                                String message = "register failed";
+                                if (e.code == 'email-already-in-use') {
+                                  message = 'this email is alr used';
+                                } else if (e.code == 'invalid-email') {
+                                  message = 'invalid email';
+                                } else if (e.code == 'weak-password') {
+                                  message = 'weak pw';
+                                }
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),));
+                              }
+                            }
                           ),
                         ),
 
@@ -148,24 +198,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(height: 12),
 
                         // Social Login Icons
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.white,
-                              child: FaIcon(
+                              child: IconButton(onPressed: _signInWithGoogle, icon: const FaIcon(
                                 FontAwesomeIcons.google,
                                 color: SignUpScreen.primaryColor,
-                              ),
+                              ),)
                             ),
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor: Colors.white,
                               child: FaIcon(
                                 FontAwesomeIcons.facebook,
                                 color: SignUpScreen.primaryColor,
                               ),
                             ),
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor: Colors.white,
                               child: FaIcon(
                                 FontAwesomeIcons.apple,
@@ -186,10 +236,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildInputField(String hint, IconData icon) {
+  Widget _buildInputField(String hint, IconData icon, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           hintText: hint,
           prefixIcon: Icon(icon, color: SignUpScreen.primaryColor),
@@ -202,10 +253,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildPasswordField(String hint, bool obscure, VoidCallback toggle) {
+  Widget _buildPasswordField(String hint, TextEditingController controller, bool obscure, VoidCallback toggle) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: TextField(
+        controller: controller,
         obscureText: obscure,
         decoration: InputDecoration(
           hintText: hint,
@@ -224,5 +276,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      Navigator.pushNamed(context, '/');
+    } on FirebaseAuthException catch (e) {
+      print('google sign-in error: ${e.code}');
+          print("Signed in as: ${FirebaseAuth.instance.currentUser?.email}");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('sign in failed: ${e.message}'),));
+    }
+  }
+
+  Future<void> saveUserProfile(User user, String username) async {
+    print("save: ${user.uid}");
+    final usersRef = FirebaseFirestore.instance.collection('users');
+
+    await usersRef.doc(user.uid).set({
+      'username': username,
+      'email': user.email,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
   }
 }

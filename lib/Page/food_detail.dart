@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart'
+show FirebaseFirestore, FieldValue;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nhameii/components/backbutton.dart';
 
@@ -8,12 +11,16 @@ class FoodDetail extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final String? detail;
+  final String? rating;
 
   const FoodDetail({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
+    this.detail,
+    this.rating,
   });
 
   @override
@@ -30,7 +37,7 @@ class FoodDetail extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Image.asset(
                     'assets/images/background3.png',
-                    fit: BoxFit.cover, 
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Padding(
@@ -43,7 +50,7 @@ class FoodDetail extends StatelessWidget {
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
+                          child: smartImage(
                             imageUrl,
                             height: 200,
                             fit: BoxFit.cover,
@@ -77,7 +84,7 @@ class FoodDetail extends StatelessWidget {
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.star,
                                     color: Colors.amber,
@@ -85,7 +92,7 @@ class FoodDetail extends StatelessWidget {
                                   ),
                                   SizedBox(width: 4),
                                   Text(
-                                    '4.9',
+                                    rating ?? 'N/A',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -107,8 +114,8 @@ class FoodDetail extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'This delicious Cambodian dish is perfect for anyone looking to enjoy a rich and traditional flavor. Made with fresh ingredients and cooked with love.',
+                      Text(
+                        detail ?? 'No detail available.',
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 50),
@@ -122,7 +129,38 @@ class FoodDetail extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          GradientButton(onPressed: () {}, text: 'Add to Cart'),
+                          GradientButton(
+                            onPressed: () async {
+                              try {
+                                final user = FirebaseAuth.instance.currentUser;
+                                if (user == null) {
+                                  print('No user logged in!');
+                                  return;
+                                }
+
+                                await FirebaseFirestore.instance
+                                    .collection('history')
+                                    .add({
+                                      'userId': user.uid, 
+                                      'title': title,
+                                      'imageUrl': imageUrl,
+                                      'price': price,
+                                      'detail': detail ?? '',
+                                      'rating': rating ?? '',
+                                      'timestamp': FieldValue.serverTimestamp(),
+                                    });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Added to history! 🍔'),
+                                  ),
+                                );
+                              } catch (e) {
+                                print('Error adding to history: $e');
+                              }
+                            },
+
+                            text: 'Eat Now!',
+                          ),
                         ],
                       ),
                     ],
@@ -134,5 +172,30 @@ class FoodDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget smartImage(
+    String path, {
+    BoxFit fit = BoxFit.cover,
+    double? width,
+    double? height,
+  }) {
+    if (path.startsWith('http')) {
+      return Image.network(
+        path,
+        fit: fit,
+        width: width,
+        height: height,
+        errorBuilder: (_, __, ___) => Icon(Icons.broken_image),
+      );
+    } else {
+      return Image.asset(
+        path,
+        fit: fit,
+        width: width,
+        height: height,
+        errorBuilder: (_, __, ___) => Icon(Icons.broken_image),
+      );
+    }
   }
 }

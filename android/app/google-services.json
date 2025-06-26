@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "321268191082",
+    "project_id": "nham-eii-project",
+    "storage_bucket": "nham-eii-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321268191082:android:da85c6d8e25074bf599f13",
+        "android_client_info": {
+          "package_name": "com.example.nhameii"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn6uCvlB7AjbGrXIo36l1fQO7xKpxO8Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

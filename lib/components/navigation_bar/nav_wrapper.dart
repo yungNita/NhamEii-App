@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'nav_bar.dart';
 
@@ -20,23 +21,36 @@ class NavWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
-      // backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false, 
       body: Stack(
         children: [
           child,
-          Positioned(
-            bottom: 20,
-            left: 12,
-            right: 12,
-            child: NavBar(
-              currentIndex: currentIndex,
-              onTap: (index) => _onTap(context, index),
-              
-              
+          if (!isKeyboardOpen)
+            Positioned(
+              bottom: 20,
+              left: 12,
+              right: 12,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                  child: AnimatedOpacity(
+                    opacity: isKeyboardOpen ? 0.0 : 1.0,
+                    duration: Duration(milliseconds: 200),
+                    child: SafeArea(
+                      bottom: true,
+                      child: NavBar(
+                        currentIndex: currentIndex,
+                        onTap: (index) => _onTap(context, index),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );

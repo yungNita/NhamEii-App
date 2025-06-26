@@ -4,7 +4,8 @@ import 'package:nhameii/components/cards/category_card.dart';
 import 'package:nhameii/components/homepage_component/filterbutton.dart';
 import 'package:nhameii/components/homepage_component/header.dart';
 import 'package:nhameii/components/navigation_bar/nav_bar.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/category_image.dart';
 import '../data/categoryitem.dart';
 
 class Categorylist extends StatefulWidget {
@@ -50,7 +51,8 @@ class _CategorylistState extends State<Categorylist> {
                 .where((card) => card.type.contains(selectedType))
                 .toList();
 
-    return Scaffold(
+    return 
+    Scaffold(
       body: Background(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,24 +98,47 @@ class _CategorylistState extends State<Categorylist> {
             ),
             SizedBox(height: 20),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 0.0),
-                child: SingleChildScrollView(
+              child: StreamBuilder<QuerySnapshot>(stream: FirebaseFirestore.instance.collection('categories').snapshots(), builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting){
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text('no categories'),);
+                }
+                final categories = snapshot.data!.docs.map((doc) {
+                   final data = doc.data() as Map<String, dynamic>;
+                    final categoryId = doc.id;
+                    final title = data['title'] as String? ?? '';
+                    final types = List<String>.from(data['type'] ?? []);
+                    final imagePath = categoryImages[categoryId] ?? '';
+
+                    return CategoryCard(
+                      title: title,
+                      imagePath: imagePath,
+                      type: types,
+                    );
+                }).toList();
+
+                final String selectedType = filters[selectedIndex];
+                final filteredCategories = selectedType == 'All' ? categories : categories.where((card) => card.type.contains(selectedType)).toList();
+                 return SingleChildScrollView(
+                child: Padding(padding: const EdgeInsets.only(left: 0.0),
                   child: Wrap(
                     spacing: 10,
                     runSpacing: 8,
                     children:
-                        filteredCards
+                        filteredCategories
                             .map((ccard) => SizedBox(width: 130, child: ccard))
                             .toList(),
                   ),
                 ),
-              ),
+              );})
             ),
           ],
         ),
       ),
-      bottomNavigationBar: NavBar(currentIndex: 0, onTap: (index) {}),
+      
     );
+  
   }
 }

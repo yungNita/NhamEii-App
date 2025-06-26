@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:nhameii/Components/gradient_background.dart';
 import 'package:nhameii/components/account_setting/account_button.dart';
 import 'package:nhameii/components/account_setting/account_header.dart';
 import 'package:nhameii/components/account_setting/account_menu_container.dart';
 import 'package:nhameii/components/gradient_background.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../components/navigation_bar/nav_wrapper.dart';
 
 class MyAccountPage extends StatefulWidget {
@@ -70,8 +70,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
+                            await _logout(); 
                             Navigator.pushReplacementNamed(context, '/account-not-log-in');
                           },
                           child: const Text(
@@ -90,89 +91,108 @@ class _MyAccountPageState extends State<MyAccountPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return NavWrapper(
-      currentIndex: 4,
+Widget build(BuildContext context) {
+  final user = FirebaseAuth.instance.currentUser;
+
+  // If user is not logged in, navigate to the not-logged-in page
+  if (user == null) {
+    // Use Future.microtask to navigate after build completes
+    Future.microtask(() {
+      Navigator.pushReplacementNamed(context, '/account-not-log-in');
+    });
+
+    // Return an empty widget temporarily while routing
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  // If user is logged in, show the normal account UI
+  return NavWrapper(
+    currentIndex: 4,
     child: GradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 36, right: 22, left: 22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                
-              
-                AccountHeader(name: 'Kasibook', email: 'Kasibook@gmail.com' ),
-                
-                const SizedBox(height: 18),
-                AccountMenuContainer(
-                  children: [
-                    _buildMenuItem(
-                      context,
-                      Icons.person_outline,
-                      'Edit Profile',
-                      '/edit_profile',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.history,
-                      'History',
-                      '/history',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.favorite_border,
-                      'Wishlist',
-                      '/wishlist',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.notifications_none,
-                      'Notifications',
-                      '/notification',
-                    ),
-                    // _buildMenuItem(
-                    //   context,
-                    //   Icons.info_outline,
-                    //   'About Us',
-                    //   '/about-us',
-                    // ),
-                    _buildMenuItem(
-                      context,
-                      Icons.support_outlined,
-                      'FAQ',
-                      '/faq',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.sticky_note_2_sharp,
-                      'Term and Policy',
-                      '/term-and-polocies',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      Icons.phone,
-                      'Contact Us',
-                      '/contact-us',
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: AccountButton(text: 'Log out', onPressed: () {_showLogoutDialog(context);  },),
-                      
-                    ),
-                  ],
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AccountHeader(
+                    name: user.displayName ?? 'User',
+                    email: user.email ?? 'user@gmail.com',
+                  ),
+                  const SizedBox(height: 18),
+                  AccountMenuContainer(
+                    children: [
+                      _buildMenuItem(
+                        context,
+                        Icons.person_outline,
+                        'Edit Profile',
+                        '/edit_profile',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.history,
+                        'History',
+                        '/history',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.favorite_border,
+                        'Wishlist',
+                        '/wishlist',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.notifications_none,
+                        'Notifications',
+                        '/notification',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.support_outlined,
+                        'FAQ',
+                        '/faq',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.sticky_note_2_sharp,
+                        'Term and Policy',
+                        '/term-and-polocies',
+                      ),
+                      _buildMenuItem(
+                        context,
+                        Icons.phone,
+                        'Contact Us',
+                        '/contact-us',
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: AccountButton(
+                          text: 'Log out',
+                          onPressed: () {
+                            _showLogoutDialog(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 100),
+                ],
+              ),
             ),
           ),
         ),
       ),
     ),
-    );
-  }
+  );
+}
+
 
   Widget _buildMenuItem(
     BuildContext context,
@@ -190,5 +210,24 @@ class _MyAccountPageState extends State<MyAccountPage> {
         Navigator.pushNamed(context, routeName);
       },
     );
+  }
+  Future<void> _logout() async {
+    try {
+      // Sign out from Firebase
+      await FirebaseAuth.instance.signOut();
+
+      // Sign out and disconnect from Google 
+      final googleSignIn = GoogleSignIn();
+      if (await googleSignIn.isSignedIn()) {
+        await googleSignIn.disconnect();
+        await googleSignIn.signOut();
+      }
+      print('User logged out successfully.');
+    } catch (e) {
+      print('Logout error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to log out. Please try again.')),
+      );
+    }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/Page/game_page.dart';
+import 'package:nhameii/Page/question_answer.dart';
 import 'package:nhameii/components/button.dart';
 import 'package:nhameii/components/homepage_component/promotion.dart';
 import 'package:nhameii/components/options.dart';
@@ -39,13 +41,7 @@ class HeaderHomePage extends StatelessWidget {
               height: 48, width: 250, child: Search()
             ),
             const SizedBox(width: 8),
-            GradientButton(
-              imageAsset: 'assets/images/settings.png',
-              onPressed: () {
-                debugPrint('Filter button pressed');
-              },
-              width: 55,
-            ),
+            
           ],
         ),),
         const SizedBox(height: 16),
@@ -72,7 +68,7 @@ class HeaderHomePage extends StatelessWidget {
           imageAsset: 'assets/images/wheel.png',
           image: 'assets/images/peng.png',
           onPressed: () {
-            print('Option 1 clicked');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GamePage()));
           },
         ),
         const SizedBox(height: 20),
@@ -83,7 +79,7 @@ class HeaderHomePage extends StatelessWidget {
           image: 'assets/images/peng2.png',
           imageLeft: true,
           onPressed: () {
-            print('Option 2 clicked');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => QnAFlowPage()));
           },
         ),
       ],

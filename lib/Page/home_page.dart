@@ -7,51 +7,15 @@ import 'package:nhameii/components/navigation_bar/nav_wrapper.dart';
 import 'package:nhameii/components/cards/promo_card.dart';
 import '../components/cards/food_card.dart';
 import '../components/gradient_background.dart';
+import '../data/food_image.dart';
+import '../data/category_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> foodCards = [
-      FoodCard(
-      title: 'Fish Amok',
-    price: '\$4.99',
-    imageUrl: 'assets/images/food/khmer/amok.png',
-    // category: 'Khmer Food',
-      ),
-      FoodCard(
-      title: 'Bok Kapi',
-    price: '\$4.99',
-    imageUrl: 'assets/images/food/khmer/bokkapii.png',
-    // category: 'Khmer Food',
-      ),
-      FoodCard(
-      title: 'Grilled Fish',
-    price: '\$4.99',
-    imageUrl: 'assets/images/food/khmer/fishang.png',
-    // category: 'Khmer Food',
-      ),
-      FoodCard(
-      title: 'Somlor Korko',
-    price: '\$4.99',
-    imageUrl: 'assets/images/food/khmer/kako.png',
-    // category: 'Khmer Food',
-      ),
-      FoodCard(
-      title: 'Koung',
-    price: '\$4.99',
-    imageUrl: 'assets/images/food/khmer/koung.png',
-    // category: 'Khmer Food',
-      ),
-      FoodCard(
-      title: 'Loklak',
-    price: '\$4.99',
-    imageUrl: 'assets/images/food/khmer/loklak.png',
-    // category: 'Khmer Food',
-      ),
-    ];
-
     final List<CategoryCard> categoryCard = [
       CategoryCard(
         title: 'Khmer Food',
@@ -117,24 +81,52 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 280,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children:
-                              foodCards
-                                  .map(
-                                    (card) => Padding(
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream:
+                            FirebaseFirestore.instance
+                                .collection('foods')
+                                .where('categoryId', isEqualTo:  'khmer-food')
+                                .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          final food = snapshot.data!.docs;
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children:
+                                  food.map((doc) {
+                                    final data =
+                                        doc.data() as Map<String, dynamic>;
+                                    final foodId = doc.id;
+                                    final title = data['name'] ?? '';
+                                    final price =
+                                        data['price']?.toString() ?? '';
+                                    final imageUrl = foodImages[foodId] ?? '';
+                                    final rating = data['rating'].toString();
+                                    final detail = data['detail'];
+                                    return Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 12.0,
                                       ),
-                                      child: card,
-                                    ),
-                                  )
-                                  .toList(),
-                        ),
+                                      child: FoodCard(
+                                        imageUrl: imageUrl,
+                                        title: title,
+                                        price: '\$$price',
+                                        detail: detail,
+                                        rating: rating,
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                     const Text(
+                    const Text(
                       'Category',
                       style: TextStyle(
                         fontSize: 19,
@@ -144,21 +136,57 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 200,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            ...categoryCard.map(
-                              (ccard) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 3.0,
-                                ),
-                                child: ccard,
-                              ),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream:
+                            FirebaseFirestore.instance
+                                .collection('categories')
+                                .where('type', arrayContains: 'Trending')
+                                .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return const Center(
+                              child: Text("No categories found"),
+                            );
+                          }
+                          final categories = snapshot.data!.docs;
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                ...categories.map((doc) {
+                                  final data =
+                                      doc.data() as Map<String, dynamic>;
+                                  final title = data['title'] as String? ?? '';
+                                  final categoryId = doc.id;
+                                  final types = List<String>.from(
+                                    data['type'] ?? [],
+                                  );
+                                  final imagePath =
+                                      categoryImages[categoryId] ?? '';
+
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 3.0,
+                                    ),
+                                    child: CategoryCard(
+                                      title: title,
+                                      imagePath: imagePath,
+                                      type: types,
+                                    ),
+                                  );
+                                }),
+                                SeemoreButton(destination: Categorylist()),
+                              ],
                             ),
-                            SeemoreButton(destination: Categorylist()),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
 
