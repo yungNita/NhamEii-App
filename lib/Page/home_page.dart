@@ -10,6 +10,7 @@ import '../components/gradient_background.dart';
 import '../data/food_image.dart';
 import '../data/category_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nhameii/components/homepage_component/popular_restaurant.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -51,6 +52,15 @@ class HomePage extends StatelessWidget {
       PromoCard(imagePath: 'assets/promo1.jpg'),
       PromoCard(imagePath: 'assets/promo1.jpg'),
     ];
+    final List<Widget> popularRestaurants = [
+      PopularRestaurant(imagePath: 'assets/images/restaurant/restaurant1.png', label: 'Khmer 24'),
+      PopularRestaurant(imagePath: 'assets/images/restaurant/restaurant2.png', label: 'Malis'),
+      PopularRestaurant(imagePath: 'assets/images/restaurant/restaurant3.png', label: 'Sakada'), 
+      PopularRestaurant(imagePath: 'assets/images/restaurant/restaurant4.jpg', label: 'Sovanna Phum'),
+      PopularRestaurant(imagePath: 'assets/images/restaurant/restaurant6.jpg', label: 'Khmer Food'),
+      PopularRestaurant(imagePath: 'assets/images/restaurant/restaurant7.png', label: 'Angkor'),
+      
+    ];
     return NavWrapper(
       currentIndex: 0, //current index for HomePage
       child: GradientBackground(
@@ -64,7 +74,7 @@ class HomePage extends StatelessWidget {
                   left: 18.0,
                   right: 0,
                   bottom: 80,
-                ), // Padding so content doesn't hide under navbar
+                ), 
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -126,6 +136,7 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                     ),
+                    
                     const Text(
                       'Category',
                       style: TextStyle(
@@ -219,7 +230,39 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 70), // extra space at bottom
+                    const SizedBox(height: 40),
+                    
+                    const Text(
+                      'Popular Restaurants',
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF44005E),
+                      ),
+                    ),
+                    // const SizedBox(height: 20),
+                    SizedBox(
+                      height: 190,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children:
+                              popularRestaurants
+                                  .map(
+                                    (restaurant) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0,
+                                      
+                                      ),
+                                      child: restaurant,
+                                      
+                                    ),
+                                  )
+                                  .toList(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20), 
                   ],
                 ),
               ),
