@@ -13,6 +13,9 @@ class Searchbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onTap: () {
+        Navigator.pushReplacementNamed(context, '/search');
+      },
       onChanged: onChanged,
       decoration: InputDecoration(
         fillColor: Color(0xFFE9E9FF),

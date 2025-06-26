@@ -1,3 +1,4 @@
+import 'package:nhameii/Page/food_detail.dart';
 import 'package:nhameii/Page/game_page.dart' ;
 import 'package:nhameii/Page/history_page.dart';
 import 'package:nhameii/Page/home_page.dart';
@@ -14,6 +15,8 @@ import 'package:nhameii/Page/account_section/notification_page.dart';
 import 'package:nhameii/Page/account_section/sign-up.dart';
 import 'package:nhameii/Page/account_section/termsnpolicies.dart';
 import 'package:nhameii/Page/account_section/wishlist_page.dart';
+import 'package:nhameii/Page/search_page.dart';
+import 'package:nhameii/Page/search_results_page.dart';
 
 
 class AppRouter {
@@ -60,7 +63,11 @@ class AppRouter {
       case '/sign-up':
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
 
-        
+      case '/search':
+      return MaterialPageRoute(builder: (_) => const SearchPage());
+
+      case '/search-results':
+      return MaterialPageRoute(builder: (_) => const SearchResultsPage(query: '***'));
 
       default:
         return MaterialPageRoute(
