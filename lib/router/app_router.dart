@@ -86,7 +86,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SearchResultsPage(query: '***'));
 
       default:
-        return _errorRoute('Page Not Found 🕳️');
+        return _errorRoute('Page Not Found ');
     }
   }
 

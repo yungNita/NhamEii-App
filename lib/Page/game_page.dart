@@ -8,7 +8,10 @@ import '../components/navigation_bar/nav_wrapper.dart';
 import '../components/gradient_background.dart';
 
 class GamePage extends StatefulWidget {
-  const GamePage({super.key});
+  // const GamePage({super.key});
+  final List<String>? foodsFromQuiz;
+
+  const GamePage({super.key, this.foodsFromQuiz});
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -26,29 +29,56 @@ class _GamePageState extends State<GamePage> {
   ];
   List<String> userFoods = [];
   bool useUserFoods = false;
+  bool hasSpunOnce = false;
 
   String? lastResult;
   bool isResultFromRecommendation = false;
 
   int selected = 0;
+  bool isSpinning = false;
 
-  List<String> get items =>
-      useUserFoods && userFoods.isNotEmpty ? userFoods : recommendedFoods;
+  List<String> get items {
+    if (widget.foodsFromQuiz != null && widget.foodsFromQuiz!.isNotEmpty) {
+      return widget.foodsFromQuiz!;
+    } else if (useUserFoods && userFoods.isNotEmpty) {
+      return userFoods;
+    } else {
+      return recommendedFoods;
+    }
+  }
 
   void spinWheel() {
-    if (items.isEmpty) return;
-    final index = Random().nextInt(items.length);
-    controller.add(index);
+    if (items.isEmpty || isSpinning) return;
 
-    Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        lastResult = items[index];
-        isResultFromRecommendation =
-            !useUserFoods || !userFoods.contains(lastResult);
-      });
-      showResultDialog();
+    final index1 = Random().nextInt(items.length);
+    setState(() {
+      isSpinning = true;
+      hasSpunOnce = true;
+      selected = index1;
     });
+
+    controller.add(index1);
   }
+
+  void onWheelAnimationEnd() {
+    if (!hasSpunOnce) return;
+
+    setState(() {
+      isSpinning = false;
+      lastResult = items[selected];
+      isResultFromRecommendation =
+          !useUserFoods || !userFoods.contains(lastResult);
+    });
+
+    showResultDialog();
+  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller = StreamController<int>();
+  //   isSpinning = false;
+  //   hasSpunOnce = false; // Reset on fresh page
+  // }
 
   void promptUserForFood() {
     final TextEditingController textController = TextEditingController();
@@ -91,13 +121,6 @@ class _GamePageState extends State<GamePage> {
         );
       },
     );
-  }
-
-  void useRecommendation() {
-    setState(() {
-      useUserFoods = false;
-    });
-    spinWheel();
   }
 
   FoodItem? getFoodItemByName(String name) {
@@ -178,10 +201,10 @@ class _GamePageState extends State<GamePage> {
                 const SizedBox(height: 16),
                 // Game title
                 Row(
-                  children: [
-                    const SizedBox(width: 25),
+                  children: const [
+                    SizedBox(width: 25),
                     SizedBox(height: 80),
-                    const Text(
+                    Text(
                       'Game ',
                       style: TextStyle(
                         fontSize: 24,
@@ -194,10 +217,7 @@ class _GamePageState extends State<GamePage> {
                 const SizedBox(height: 10),
                 // Buttons
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 0,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     children: [
                       Expanded(
@@ -206,14 +226,15 @@ class _GamePageState extends State<GamePage> {
                             setState(() {
                               useUserFoods = true;
                             });
-
-                            promptUserForFood(); // prompt after switching mode
+                            promptUserForFood();
                           },
                           icon: const Icon(Icons.edit, size: 18),
                           label: const Text('Input your own foods'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                useUserFoods ? Color(0xFFD8007A) : Colors.white,
+                                useUserFoods
+                                    ? const Color(0xFFD8007A)
+                                    : Colors.white,
                             foregroundColor:
                                 useUserFoods ? Colors.white : Colors.black,
                             shape: RoundedRectangleBorder(
@@ -223,7 +244,7 @@ class _GamePageState extends State<GamePage> {
                             side: BorderSide(
                               color:
                                   useUserFoods
-                                      ? Color(0xFFD8007A)
+                                      ? const Color(0xFFD8007A)
                                       : Colors.grey.shade300,
                               width: 1.5,
                             ),
@@ -237,14 +258,13 @@ class _GamePageState extends State<GamePage> {
                             setState(() {
                               useUserFoods = false;
                             });
-
                           },
                           icon: const Icon(Icons.auto_awesome, size: 18),
                           label: const Text('Our Recommendation'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 !useUserFoods
-                                    ? Color(0xFFD8007A)
+                                    ? const Color(0xFFD8007A)
                                     : Colors.white,
                             foregroundColor:
                                 !useUserFoods ? Colors.white : Colors.black,
@@ -255,7 +275,7 @@ class _GamePageState extends State<GamePage> {
                             side: BorderSide(
                               color:
                                   !useUserFoods
-                                      ? Color(0xFFD8007A)
+                                      ? const Color(0xFFD8007A)
                                       : Colors.grey.shade300,
                               width: 1.5,
                             ),
@@ -265,9 +285,8 @@ class _GamePageState extends State<GamePage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 36),
-                // Smaller fortune wheel
+                // Wheel container
                 SizedBox(
                   width: 300,
                   height: 300,
@@ -285,19 +304,22 @@ class _GamePageState extends State<GamePage> {
                                 child: TriangleIndicator(color: Colors.black),
                               ),
                             ],
+                            onAnimationEnd: onWheelAnimationEnd,
                           )
                           : const Center(
                             child: Text(
                               'Please add at least 2 foods to spin the wheel!',
+                              textAlign: TextAlign.center,
                             ),
                           ),
                 ),
                 const SizedBox(height: 30),
                 // Spin button
                 SizedBox(
-                  width: 100, // set your desired width
+                  width: 150,
                   child: ElevatedButton(
-                    onPressed: items.length > 1 ? spinWheel : null,
+                    onPressed:
+                        items.length > 1 && !isSpinning ? spinWheel : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
@@ -309,7 +331,7 @@ class _GamePageState extends State<GamePage> {
                     child: Ink(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFFFD4EB1), Color(0xFFD8007A)],
+                          colors: const [Color(0xFFFD4EB1), Color(0xFFD8007A)],
                         ),
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -319,9 +341,12 @@ class _GamePageState extends State<GamePage> {
                           horizontal: 10,
                           vertical: 10,
                         ),
-                        child: const Text(
-                          "Spin",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        child: Text(
+                          isSpinning ? "Spinning..." : "Spin",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

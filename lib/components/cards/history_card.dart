@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../Page/food_detail.dart';
+// import '../../Page/food_detail.dart';
 
 class HistoryCard extends StatelessWidget {
   final String imagePath;
