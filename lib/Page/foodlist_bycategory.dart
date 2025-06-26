@@ -86,7 +86,7 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
                             title: title,
                             price: price,
                             detail: detail,
-                            rating: rating,
+                            rating: rating, id: '',
                           ),
                         );
                       }).toList(),

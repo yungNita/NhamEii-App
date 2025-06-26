@@ -23,7 +23,7 @@ class _AccountNotLogInState extends State<AccountNotLogIn> {
           padding: const EdgeInsets.only(top: 50, right: 20, left: 20),
           child: Column(
             children: [
-              AccountHeader(name: 'User'),
+              AccountHeader(name: 'User', email: '',),
               const SizedBox(height: 24),
               AccountMenuContainer(
                 children: [

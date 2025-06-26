@@ -75,7 +75,7 @@ class FoodDetail extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '\$$price',
+                                      price,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600,
@@ -129,7 +129,7 @@ class FoodDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$$price',
+                      price,
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w700,

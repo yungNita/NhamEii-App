@@ -362,20 +362,20 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
 
       rows.add(
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 100, 25, 0),
+          padding: const EdgeInsets.fromLTRB(5, 100, 0, 0),
           child: Row(
             children: [
               FoodCard(
                 imageUrl: item1['image'], 
                 title: item1['name'], 
-                price: item1['price']
+                price: item1['price'], id: '',
               ),
               SizedBox(width: 50),
               item2 != null
                   ? FoodCard(
                       imageUrl: item2['image'], 
                       title: item2['name'], 
-                      price: item2['price']
+                      price: item2['price'], id: '',
                     )
                   : SizedBox.shrink(),
             ],

@@ -103,6 +103,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
       currentIndex: 2,
       child: GradientBackground(
         child: Scaffold(
+          backgroundColor: Colors.transparent,
           body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 7),
@@ -169,7 +170,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
                                 return FoodCard(
                                   title: food['name'],
                                   price: '\$${food['price']}',
-                                  imageUrl: imageUrl,
+                                  imageUrl: imageUrl, id: '',
                                 );
                               }).toList(),
                         ),
