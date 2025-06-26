@@ -158,10 +158,10 @@ class _FoodRecommendState extends State<FoodRecommend> {
                           mainAxisSpacing: 90,
                           crossAxisSpacing: 22,
                           shrinkWrap: true,
-                          physics:
-                              const AlwaysScrollableScrollPhysics(), // Ensures scrolling inside
+                          // physics:
+                          //     const AlwaysScrollableScrollPhysics(), // Ensures scrolling inside
                           childAspectRatio:
-                              0.9, // Adjust based on your card design
+                              0.9,
                           children:
                               recommendedFoods.map((food) {
                                 final imageUrl =

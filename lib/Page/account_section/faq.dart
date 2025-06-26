@@ -5,6 +5,7 @@ import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/button.dart';
 import 'package:nhameii/components/account_setting/faqquestion.dart';
 import 'package:nhameii/components/navigation_bar/nav_bar.dart';
+import 'package:nhameii/components/navigation_bar/nav_wrapper.dart';
 
 class Faqs extends StatelessWidget {
   Faqs({super.key});
@@ -52,92 +53,91 @@ class Faqs extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold( body:  Background(
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 12.0),
-                  child: BackButtonWidget(),
-                ),
-                Text(
-                  'FAQ',
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
+    return NavWrapper(
+      currentIndex: 4,
+      child: Scaffold( body:  Background(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: BackButtonWidget(),
+                  ),
+                  Text(
+                    'FAQ',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'We’re here to help you with everything here on NhamEii',
+                        style: textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'At NhamEii, we give you daily food tips for your wants and needs! We have got you covered, share your concerns or check our frequently asked questions below.',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+                      ...faqData.map(
+                        (faq) => FaqQuestion(
+                          question: faq['question']!,
+                          answer: faq['answer']!,
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+                      Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Still got questions?',
+                              style: textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            GradientButton(
+                              text: 'Contact Us',
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ContactUs(),
+                                  ),
+                                );
+                              },
+      
+                              width: 115,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 100),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'We’re here to help you with everything here on NhamEii',
-                      style: textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'At NhamEii, we give you daily food tips for your wants and needs! We have got you covered, share your concerns or check our frequently asked questions below.',
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    ...faqData.map(
-                      (faq) => FaqQuestion(
-                        question: faq['question']!,
-                        answer: faq['answer']!,
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    Center(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Still got questions?',
-                            style: textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          GradientButton(
-                            text: 'Contact Us',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ContactUs(),
-                                ),
-                              );
-                            },
-
-                            width: 115,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 100),
-                  ],
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-    bottomNavigationBar: NavBar(
-        currentIndex: 0, 
-        onTap: (index) {
-        },
+        
       ),
     );
   }
