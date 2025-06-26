@@ -39,7 +39,7 @@ class FilterButton extends StatelessWidget {
         onTap: onPressed,
         child: Container(
           height: 36,
-          padding: const EdgeInsets.only(left: 10, right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: Color(0xFFD8007A)),

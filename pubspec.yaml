@@ -86,6 +86,24 @@ flutter:
     - assets/images/
     - assets/images/category/
     - assets/images/food/khmer/
+    - assets/images/food/burger/
+    - assets/images/food/cake/
+    - assets/images/food/chicken/
+    - assets/images/food/chinese/
+    - assets/images/food/fish/
+    - assets/images/food/icecream/
+    - assets/images/food/indian/
+    - assets/images/food/japanese/
+    - assets/images/food/juice/
+    - assets/images/food/korean/
+    - assets/images/food/milktea/
+    - assets/images/food/pasta/
+    - assets/images/food/pastry/
+    - assets/images/food/pizza/
+    - assets/images/food/salad/
+    - assets/images/food/smoothie/
+    - assets/images/food/thai/
+    - assets/images/food/viet/
     - assets/icons/
     - assets/images/navigation_bar/
     - assets/images/restaurant/
