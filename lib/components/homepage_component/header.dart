@@ -13,6 +13,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: false,
       title: const Text(
         'Hello, there!!',
         style: TextStyle(

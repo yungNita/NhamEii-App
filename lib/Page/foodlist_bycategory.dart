@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/cards/food_card.dart';
 import 'package:nhameii/components/homepage_component/header.dart';
@@ -31,16 +32,17 @@ class _FoodlistBycategoryState extends State<FoodlistBycategory> {
       body: Background(
         child: Column(
           children: [
-            Header(),
+            // Header(),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, bottom: 10),
               child: Row(
                 children: [
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 24),
+                  BackButtonWidget(),
                   Text(
                     widget.title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),

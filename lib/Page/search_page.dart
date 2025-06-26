@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/Page/categorylist.dart';
 import 'package:nhameii/Page/restaurant_page.dart';
 import 'package:nhameii/Page/search_results_page.dart';
 import 'package:flutter_svg/svg.dart';
@@ -81,9 +82,9 @@ class _SearchPageState extends State<SearchPage> {
   void deleteSearch(String value) {
     if(recentSearches.contains(value)) {
       // var index = recentSearches.indexOf(value);
-      final retVal = recentSearches.remove(value);
-      print(retVal);
-      print(recentSearches);
+      setState(() {
+        recentSearches.remove(value);
+      });
     }
   }
 
@@ -190,7 +191,13 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             Text("Categories", style: TextStyle(fontWeight: FontWeight.bold)),
             Spacer(),
-            Text("View All", style: TextStyle( fontWeight: FontWeight.w500, fontSize: 12))
+            GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Categorylist())),
+              child: Text(
+                  "View All", 
+                  style: TextStyle( fontWeight: FontWeight.w500, fontSize: 12),
+                  ),
+            ),
           ],
         ),
         SizedBox(height: 24),

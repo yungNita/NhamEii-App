@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhameii/components/backbutton.dart';
 import 'package:nhameii/components/background.dart';
 import 'package:nhameii/components/cards/category_card.dart';
 import 'package:nhameii/components/homepage_component/filterbutton.dart';
@@ -57,7 +58,7 @@ class _CategorylistState extends State<Categorylist> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Header(),
+            // Header(),
             SizedBox(height: 20),
             SizedBox(
               child: Padding(
@@ -65,9 +66,11 @@ class _CategorylistState extends State<Categorylist> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    BackButtonWidget(),
+                    SizedBox(width: 10),
                     Text(
                       'Categories',
-                      style: textTheme.titleMedium?.copyWith(
+                      style: textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
